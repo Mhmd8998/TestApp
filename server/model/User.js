@@ -57,7 +57,32 @@ const validateRegisterUser = (obj)=>{
     lastname:joi.string().max(100).min(3).required(),
     age:joi.string().trim().max(100).min(3).required(),
   })
-}
+  return schema.validate(obj);
+};
+
+const validateLoginUser = (obj) => {
+  const schema = Joi.object({
+    email: Joi.string().trim().min(3).required().email(),
+    password: Joi.string().trim().min(6).required()
+  });
+  return schema.validate(obj);
+};
+
+const validateUpdateUser = (obj)=>{
+  const schema = joi.object({
+    username:joi.string().trim().max(100).min(3),
+    email:joi.string().trim().max(100).min(3).email(),
+    password:joi.string().trim().max(100).min(8),
+    firstname:joi.string().max(100).min(3),
+    lastname:joi.string().max(100).min(3),
+    age:joi.string().trim().max(100).min(3),
+  })
+  return schema.validate(obj);
+};
+
 module.exports{
   UserModel,
+  validateRegisterUser,
+  validateUpdateUser,
+  validateLoginUser
 }
