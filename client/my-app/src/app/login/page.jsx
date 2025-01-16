@@ -1,5 +1,6 @@
 "use client"
 import { useState } from 'react';
+import {useCookies} from 'react-cookie';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import styles from './Login.model.css';
@@ -9,7 +10,7 @@ const Login = () => {
     email: '',
     password: '',
   });
-
+  const [_,setCookies] = useCookies(["access_token"]);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -22,7 +23,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8000/api/auth/login", formData);
+    const res = await axios.post("http://localhost:8000/api/auth/login", formData);
+    setCookies("access_token",res.data.token);
+    window.localSorage.setItem("userId",res.data.userId);
+    
     router.push("/");
   };
 
