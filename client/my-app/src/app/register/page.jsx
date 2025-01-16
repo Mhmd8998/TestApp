@@ -6,16 +6,13 @@ import styles from './Register.model.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     username: '',
     email: '',
     age: '',
     password: '',
   });
-
-  const [error, setError] = useState(null);  
-  const [loading, setLoading] = useState(false);  
 
   const router = useRouter();
 
@@ -29,23 +26,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null); // Reset error before submitting
-
-    try {
-      const response = await axios.post("http://localhost:8000/api/auth/register", formData);
-      console.log('Response:', response.data);
-      setLoading(false);
-      setTimeout(() => {
-        router.push("/login");
-      }, 500);
-    } catch (error) {
-      setLoading(false);
-      // Check if error response exists and provide a meaningful message
-      const errorMessage = error?.response?.data?.message || 'فشل في إرسال البيانات، حاول مرة أخرى';
-      console.error('Error:', error);
-      setError(errorMessage);
-    }
+    await axios.post("http://localhost:8000/api/auth/register", formData);
+    router.push("/login");
   };
 
   return (
@@ -53,24 +35,24 @@ const Register = () => {
       <h1>إنشاء حساب</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="firstName">الاسم الأول:</label>
+          <label htmlFor="firstname">الاسم الأول:</label>
           <input
             type="text"
-            id="firstName"
-            name="firstName"
-            value={formData.firstName}
+            id="firstname"
+            name="firstname"
+            value={formData.firstname}
             onChange={handleChange}
             required
           />
         </div>
         
         <div>
-          <label htmlFor="lastName">الاسم الأخير:</label>
+          <label htmlFor="lastname">الاسم الأخير:</label>
           <input
             type="text"
-            id="lastName"
-            name="lastName"
-            value={formData.lastName}
+            id="lastname"
+            name="lastname"
+            value={formData.lastname}
             onChange={handleChange}
             required
           />
@@ -109,7 +91,6 @@ const Register = () => {
             value={formData.age}
             onChange={handleChange}
             required
-            min="18" // Optional: set minimum age limit (e.g., 18)
           />
         </div>
 
@@ -126,12 +107,10 @@ const Register = () => {
           />
         </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? 'جارٍ التسجيل...' : 'التالي'}
+        <button type="submit">
+          register
         </button>
       </form>
-
-      {error && <div style={{ color: 'red' }}>{error}</div>} 
     </div>
   );
 };
