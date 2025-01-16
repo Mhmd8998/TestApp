@@ -1,18 +1,53 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const app = express();
-const cors = require("cors");
-const Auth = require("./router/Auth");
+const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { validateRegisterUser, validateLoginUser, UserModel } = require("../model/User");
 
-app.use(express.json());
-app.use(cors());
+module.exports = {
+  createUser: asyncHandler(async (req, res) => {
+    const { error } = validateRegisterUser(req.body);
+    if (error) {
+      return res.status(401).json({ message: error.details[0].message });
+    }
 
-mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-.then(res => console.log("connected db"));
+    const { username, firstname, lastname, email, password, age } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
 
-app.use("api/auth",Auth);
+    const hashPass = bcrypt.hashSync(password, 10);
+    const newUser = new UserModel({
+      username,
+      firstname,
+      lastname,
+      email,
+      password: hashPass,
+      age,
+    });
 
+    await newUser.save();
+    return res.status(200).json('User created successfully');
+  }),
 
-app.listen(3000,()=>{
-  console.log("server is runing on port 3000");
-});
+  login: asyncHandler(async (req, res) => {
+    const { error } = validateLoginUser(req.body);
+    if (error) {
+      return res.status(401).json({ message: error.details[0].message });
+    }
+
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const checkPass = await bcrypt.compare(password, user.password);
+    if (!checkPass) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const token = user.generateAuthToken();
+    return res.status(200).json({ message: "Logged in successfully", token });
+  })
+};
