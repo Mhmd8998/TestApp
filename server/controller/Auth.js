@@ -43,5 +43,5 @@ module.exports{
     const token = user.generateAuthToken()
     return res.status(200).json({ message: "Logined successfully", token })
   })
-};
 }
+
