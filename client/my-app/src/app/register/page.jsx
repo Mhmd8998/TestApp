@@ -32,7 +32,7 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/Register", formData);
+      const response = await axios.post("http://localhost:8000/api/auth/register", formData);
       console.log('Response:', response.data);
       setLoading(false);
       setTimeout(() => {
