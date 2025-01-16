@@ -14,6 +14,6 @@ mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb
   .then(res => console.log("connected db"))
   .catch(err => console.error("Error connecting to DB:", err));
 
-app.listen(3000, () => {
-  console.log("server is running on port 3000");
+app.listen(8000, () => {
+  console.log("server is running on port 8000");
 });
