@@ -46,8 +46,8 @@ module.exports = {
     if (!checkPass) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
-
+    const userId = user._id
     const token = user.generateAuthToken();
-    return res.status(200).json({ message: "Logged in successfully", token });
+    return res.status(200).json({ message: "Logged in successfully", token ,userId});
   })
 };
