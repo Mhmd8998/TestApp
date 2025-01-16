@@ -1,5 +1,6 @@
 "use client"
 import { useState } from 'react';
+import axios from 'axios';
 import styles from './Register.model.css';
 
 const Register = () => {
@@ -12,6 +13,9 @@ const Register = () => {
     password: '',
   });
 
+  const [error, setError] = useState(null);  // لحفظ الأخطاء
+  const [loading, setLoading] = useState(false);  // لحالة التحميل
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -20,10 +24,19 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // يمكنك هنا إضافة منطق لإرسال البيانات (مثل API)
-    console.log(formData);
+    setLoading(true);  // تعيين حالة التحميل على true عند إرسال البيانات
+
+    try {
+      const response = await axios.post("http://localhost:8000/api/auth/register", formData);
+      console.log('Response:', response.data);  // التعامل مع الاستجابة هنا
+      setLoading(false);  // تعيين حالة التحميل على false بعد الانتهاء
+    } catch (error) {
+      console.error('Error:', error);
+      setError('فشل في إرسال البيانات، حاول مرة أخرى');  // تعيين رسالة الخطأ
+      setLoading(false);
+    }
   };
 
   return (
@@ -102,8 +115,12 @@ const Register = () => {
           />
         </div>
 
-        <button type="submit">التالي</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'جارٍ التسجيل...' : 'التالي'}
+        </button>
       </form>
+
+      {error && <div style={{ color: 'red' }}>{error}</div>}  {/* عرض الخطأ إذا حدث */}
     </div>
   );
 };
