@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import axios from 'axios';
 import styles from './Register.model.css';
 
@@ -14,11 +14,11 @@ const Register = () => {
     password: '',
   });
 
-  const [error, setError] = useState(null);  // لحفظ الأخطاء
-  const [loading, setLoading] = useState(false);  // لحالة التحميل
+  const [error, setError] = useState(null);  
+  const [loading, setLoading] = useState(false);  
 
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -29,18 +29,20 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);  // تعيين حالة التحميل على true عند إرسال البيانات
+    setLoading(true);
 
     try {
       const response = await axios.post("http://localhost:8000/api/auth/register", formData);
-      console.log('Response:', response.data);  // التعامل مع الاستجابة هنا
-      setLoading(false);  // تعيين حالة التحميل على false بعد الانتهاء
+      console.log('Response:', response.data);
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/login");
+      }, 500);
     } catch (error) {
       console.error('Error:', error);
-      setError('فشل في إرسال البيانات، حاول مرة أخرى');  // تعيين رسالة الخطأ
+      setError(error?.response?.data?.message || 'فشل في إرسال البيانات، حاول مرة أخرى');
       setLoading(false);
     }
-    router.push("/login");
   };
 
   return (
@@ -124,7 +126,7 @@ const Register = () => {
         </button>
       </form>
 
-      {error && <div style={{ color: 'red' }}>{error}</div>}  {/* عرض الخطأ إذا حدث */}
+      {error && <div style={{ color: 'red' }}>{error}</div>} 
     </div>
   );
 };
