@@ -1,5 +1,6 @@
 "use client"
 import { useState } from 'react';
+import {useRouter} from 'next/navigation'
 import axios from 'axios';
 import styles from './Register.model.css';
 
@@ -16,6 +17,8 @@ const Register = () => {
   const [error, setError] = useState(null);  // لحفظ الأخطاء
   const [loading, setLoading] = useState(false);  // لحالة التحميل
 
+  const router = useRouter()
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,6 +40,7 @@ const Register = () => {
       setError('فشل في إرسال البيانات، حاول مرة أخرى');  // تعيين رسالة الخطأ
       setLoading(false);
     }
+    router.push("/login");
   };
 
   return (
