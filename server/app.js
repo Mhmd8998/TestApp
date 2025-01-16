@@ -7,11 +7,13 @@ const Auth = require("./router/Auth");
 app.use(express.json());
 app.use(cors());
 
-app.use("api/auth",Auth);
+// Add the leading "/" to the API path
+app.use("/api/auth", Auth);
 
 mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-.then(res => console.log("connected db"));
+  .then(res => console.log("connected db"))
+  .catch(err => console.error("Error connecting to DB:", err));
 
-app.listen(3000,()=>{
-  console.log("server is runing on port 3000");
+app.listen(3000, () => {
+  console.log("server is running on port 3000");
 });
