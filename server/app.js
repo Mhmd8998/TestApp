@@ -12,6 +12,6 @@ app.use("api/auth",Auth);
 mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(res => console.log("connected db"));
 
-app.listen(8000,()=>{
+app.listen(3000,()=>{
   console.log("server is runing on port 3000");
 });
