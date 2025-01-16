@@ -30,6 +30,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null); // Reset error before submitting
 
     try {
       const response = await axios.post("http://localhost:8000/api/auth/register", formData);
@@ -39,9 +40,11 @@ const Register = () => {
         router.push("/login");
       }, 500);
     } catch (error) {
-      console.error('Error:', error);
-      setError(error?.response?.data?.message || 'فشل في إرسال البيانات، حاول مرة أخرى');
       setLoading(false);
+      // Check if error response exists and provide a meaningful message
+      const errorMessage = error?.response?.data?.message || 'فشل في إرسال البيانات، حاول مرة أخرى';
+      console.error('Error:', error);
+      setError(errorMessage);
     }
   };
 
@@ -106,6 +109,7 @@ const Register = () => {
             value={formData.age}
             onChange={handleChange}
             required
+            min="18" // Optional: set minimum age limit (e.g., 18)
           />
         </div>
 
@@ -118,6 +122,7 @@ const Register = () => {
             value={formData.password}
             onChange={handleChange}
             required
+            minLength="6" // Optional: set password length requirement
           />
         </div>
 
@@ -132,3 +137,4 @@ const Register = () => {
 };
 
 export default Register;
+            
