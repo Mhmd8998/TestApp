@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import styles from '../styles/form.module.css';
+import styles from './Register.model.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
