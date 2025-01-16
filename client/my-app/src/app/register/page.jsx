@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styles from '../styles/form.module.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className={styles['form-container']}>
       <h1>إنشاء حساب</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -107,4 +108,3 @@ const Register = () => {
 };
 
 export default Register;
-          
