@@ -39,7 +39,7 @@ export default function Home() {
         <div>
           
           {users && Array.isArray(users) ? (
-            userss.map((user) => (
+            users.map((user) => (
               <div key={user.id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
                 <p>{user.username}</p>
