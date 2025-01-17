@@ -31,14 +31,14 @@ export default function Home() {
       fetchData();
     }
   }, [token]);
- const userss= JSON.parse(users)
+ 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Hello World</h1>
         <div>
           
-          {userss ? (
+          {users && Array.isArray(users) ? (
             userss.map((user) => (
               <div key={user.id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
@@ -49,7 +49,7 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <p>Loading users...</p>  
+            <p>Loading users...{typeof users}</p>  
           )}
         </div>
       </main>
