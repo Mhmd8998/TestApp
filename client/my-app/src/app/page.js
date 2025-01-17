@@ -11,20 +11,17 @@ export default function Home() {
   
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8000/api/users', {
+    const response = await fetch('http://localhost:8000/api/users', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
           },
         });
 
-        const result = await response.json();
-        setUsers(result);
+    const result = await response.json();
+    setUsers(result);
         
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
+      
     };
 
     if (token) {
@@ -38,19 +35,16 @@ export default function Home() {
         <h1>Hello World</h1>
         <div>
           
-          {users && Array.isArray(users) ? (
+    {
             users.map((user) => (
-              <div key={user.id}> 
+              <div key={user._id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
                 <p>{user.username}</p>
                 <p>{user.age}</p>
                 <p>{user.createdAt}</p>
                 <br />
               </div>
-            ))
-          ) : (
-            <p>Loading users...{typeof users}</p>  
-          )}
+      )}
         </div>
       </main>
     </div>
