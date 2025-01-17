@@ -40,7 +40,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Hello World</h1>
         <div>
-          {/* تحقق من وجود البيانات قبل التكرار */}
+          
           {users ? (
             users.map((user) => (
               <div key={user.id}> {/* إضافة key لكل عنصر */}
@@ -52,7 +52,7 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <p>Loading users...</p>  {/* رسالة عند عدم وجود بيانات */}
+            <p>Loading users...</p>  
           )}
         </div>
       </main>
