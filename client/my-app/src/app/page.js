@@ -20,7 +20,7 @@ export default function Home() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          console.error("error");
         }
 
         const result = await response.json();
