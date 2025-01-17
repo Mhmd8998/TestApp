@@ -8,7 +8,7 @@ export default function Home() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
   const [users, setUsers] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,6 +21,7 @@ export default function Home() {
 
         const result = await response.json();
         setUsers(result);
+        
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -30,15 +31,15 @@ export default function Home() {
       fetchData();
     }
   }, [token]);
-
+ const userss= JSON.parse(users)
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h1>Hello World</h1>
         <div>
           
-          {users && Array.isArray(users) ? (
-            users.map((user) => (
+          {userss ? (
+            userss.map((user) => (
               <div key={user.id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
                 <p>{user.username}</p>
