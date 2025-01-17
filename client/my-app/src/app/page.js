@@ -11,17 +11,15 @@ export default function Home() {
   
   useEffect(() => {
     const fetchData = async () => {
-    const response = await fetch('http://localhost:8000/api/users', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
-          },
-        });
+      const response = await fetch('http://localhost:8000/api/users', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
+        },
+      });
 
-    const result = await response.json();
-    setUsers(result);
-        
-      
+      const result = await response.json();
+      setUsers(result);
     };
 
     if (token) {
@@ -34,8 +32,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Hello World</h1>
         <div>
-          
-    {
+          {
             users.map((user) => (
               <div key={user._id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
@@ -44,10 +41,10 @@ export default function Home() {
                 <p>{user.createdAt}</p>
                 <br />
               </div>
-      )}
+            ))
+          }
         </div>
       </main>
     </div>
   );
-    }
-            
+  }
