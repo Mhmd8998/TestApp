@@ -37,9 +37,9 @@ export default function Home() {
         <h1>Hello World</h1>
         <div>
           
-          {users ? (
+          {users && Array.isArray(users) ? (
             users.map((user) => (
-              <div key={user.id}> {/* إضافة key لكل عنصر */}
+              <div key={user.id}> 
                 <h1>{user.firstname} {user.lastname}</h1>
                 <p>{user.username}</p>
                 <p>{user.age}</p>
