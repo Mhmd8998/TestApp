@@ -19,7 +19,7 @@ export default function Home() {
         },
       });
       const result = await response.json();
-      setData(result);
+      setUsers(result);
     };
     
     fetchData();
