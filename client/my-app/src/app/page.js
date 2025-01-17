@@ -19,10 +19,6 @@ export default function Home() {
           },
         });
 
-        if (!response.ok) {
-          console.error("error");
-        }
-
         const result = await response.json();
         setUsers(result);
       } catch (error) {
