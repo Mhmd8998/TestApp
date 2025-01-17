@@ -26,8 +26,9 @@
     --button-secondary-hover: #1a1a1a;
   }
 }
-p{
+.main p {
   font-size:12px;
+  width:60%;
 }
 .main {
   display: flex;
