@@ -29,7 +29,17 @@ export default function Home() {
     <main className={styles.main}>
     <h1>Hello World</h1>
     <div>
-      <pre>{JSON.stringify(users, null, 2)}</pre>
+    {
+      users.map(user =>(
+        <div>
+        <h1>{user.firstname} {user.lastname}</h1>
+        <p>{user.username}</p>
+        <p>{user.age}</p>
+        <p>{user.createdAt}</p>
+  </br>
+        </div>
+      ))
+    }
     </div>
     </main>
     </div>
