@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 export default function Home() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
