@@ -25,7 +25,6 @@ const Login = () => {
     e.preventDefault();
     const res = await axios.post("http://localhost:8000/api/auth/login", formData);
     setCookies("access_token",res.data.token);
-    window.localSorage.setItem("userId",res.data.userId);
     
     router.push("/");
   };
