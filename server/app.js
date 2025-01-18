@@ -1,9 +1,14 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const Auth = require("./router/Auth");
 const Users = require("./router/User");
+
+const DB_URL = process.env.DB_URL||8000
+const PORT = process.env.PORT
+
 
 app.use(express.json());
 app.use(cors());
@@ -12,10 +17,10 @@ app.use(cors());
 app.use("/api/auth", Auth);
 app.use("/api", Users);
 
-mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(DB_URL)
   .then(res => console.log("connected db"))
   .catch(err => console.error("Error connecting to DB:", err));
 
-app.listen(8000, () => {
-  console.log("server is running on port 8000");
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
 });
