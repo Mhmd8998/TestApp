@@ -34,7 +34,7 @@ export default function Home() {
         <div>
           {
             users.map((user) => (
-              <div key={user._id}> 
+              <div key={user._id} className={styles.user}> 
                 <h1>{user.firstname} {user.lastname}</h1>
                 <p>{user.username}</p>
                 <p>{user.age}</p>
