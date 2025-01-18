@@ -33,9 +33,7 @@ export default function Home() {
     <h1>Hello World</h1>
     <div>
       {
-        users.length === 0 ? (
-          <p>لا يوجد مستخدمين حالياً.</p>
-        ) : (
+          (
           users.map((user) => (
             <div key={user._id} className={styles.user}> 
               <h1>{user.firstname} {user.lastname}</h1>
