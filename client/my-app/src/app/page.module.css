@@ -169,6 +169,14 @@ a.secondary {
   padding:10px;
   background-color:#A9D9D0;
 }
+.user h1{
+  font-size:14px;
+  color:#5CB8F4;
+}
+.user p{
+  font-size:12px;
+  color:#5EE6F2;
+}
 
 @media (prefers-color-scheme: dark) {
   .logo {
