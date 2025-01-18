@@ -11,8 +11,7 @@
   align-items: center;
   justify-items: center;
   min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
+  gap: 5px;
   font-family: var(--font-geist-sans);
 }
 
@@ -26,10 +25,7 @@
     --button-secondary-hover: #1a1a1a;
   }
 }
-.main p {
-  font-size:12px;
-  width:60%;
-}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -170,7 +166,7 @@ a.secondary {
   flex-direction: column;
   margin:10px;
   height:150px;
-  padding:10px
+  padding:10px;
   background-color:#A9D9D0;
 }
 
