@@ -166,9 +166,9 @@ a.secondary {
 .user{
   display: flex;
   align-items: center;
-  gap: 8px;
-  width:80%;
-  height:140px;
+  flex-direction: column;
+  margin:10px;
+  height:300px;
   background-color:#A9D9D0;
 }
 
