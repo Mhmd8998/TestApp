@@ -6,7 +6,7 @@ const cors = require("cors");
 const Auth = require("./router/Auth");
 const Users = require("./router/User");
 
-const DB_URL = process.env.DB_URL||8000
+
 const PORT = process.env.PORT
 
 
@@ -17,7 +17,7 @@ app.use(cors());
 app.use("/api/auth", Auth);
 app.use("/api", Users);
 
-mongoose.connect(DB_URL)
+mongoose.connect("mongoose.connect("mongodb+srv://3b006998:ZYCMhfqBQkx1EY0I@cluster0.nsqut.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(res => console.log("connected db"))
   .catch(err => console.error("Error connecting to DB:", err));
 
