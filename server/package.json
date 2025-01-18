@@ -8,6 +8,9 @@
     "start": "nodemon app.js"
   },
   "author": "milad shikh nasir",
+  "engines":{
+    "node":"23.5.0"
+  },
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
