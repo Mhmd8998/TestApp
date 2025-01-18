@@ -163,6 +163,14 @@ a.secondary {
     justify-content: center;
   }
 }
+.user{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width:80%;
+  height:140px;
+  background-color:#A9D9D0;
+}
 
 @media (prefers-color-scheme: dark) {
   .logo {
