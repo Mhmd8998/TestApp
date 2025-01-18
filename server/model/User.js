@@ -1,6 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const joi = require('joi');
 const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -44,7 +46,7 @@ const UserSchema = mongoose.Schema({
 }, { timestamps: true });
 
 UserSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id, isAdmin: this.isAdmin }, "SECRET", { expiresIn: '1h' }); // Return token and set expiration
+  return jwt.sign({ id: this._id, isAdmin: this.isAdmin }, SECRET, { expiresIn: '1h' }); // Return token and set expiration
 }
 
 const UserModel = mongoose.model("User", UserSchema);
