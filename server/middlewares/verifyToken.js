@@ -1,11 +1,13 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET
 
 function verifyToken (req, res, next){
   const authToken = req.headers.authorization;
   if (authToken){
     const token = authToken.split(" ")[1];
     try{
-      const decodepayload = jwt.verify(token, "SECRET");
+      const decodepayload = jwt.verify(token, SECRET);
       req.user = decodepayload;
       next();
     }catch(error){
