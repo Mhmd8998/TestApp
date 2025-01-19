@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import styles from "./page.module.css";
@@ -9,8 +9,12 @@ export default function Home() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
   const [users, setUsers] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
   
+  const handleUpdate = (userId) => {
+    router.push(`/update?id=${userId}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('http://localhost:8000/api/users', {
@@ -23,10 +27,6 @@ export default function Home() {
       const result = await response.json();
       setUsers(result);
     };
-    
-    const handleUpdate = (userId) => {
-      router.push(`/update?id=${userId}`);
-    }
 
     if (token) {
       fetchData();
