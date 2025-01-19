@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
-import styles from './Register.model.css';
+import styles from './update.module.css';
 
 const Update = () => {
   const [formData, setFormData] = useState({
