@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const {getAllUser}=require('../controller/User');
+const {getAllUser, updateUser}=require('../controller/User');
 const {verifyTokenAndAdmin}=require('../middlewares/verifyToken');
 
 router.route('/users').get(verifyTokenAndAdmin,getAllUser)
-
+router.route('/update').post(verifyTokenAndUserId,updateUser)
 module.exports = router
