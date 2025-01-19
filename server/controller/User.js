@@ -22,7 +22,6 @@ module.exports={
     const userupdate = await UserModel.findByIdAndUpdate(req.params.id,{
       $set{
          username:req.body.username,
-         bio:req.body.bio,
          firstname:req.body.firstname,
          lastname:req.body.lastname,
          password:newPass
