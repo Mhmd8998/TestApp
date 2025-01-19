@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import {useRouter} from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import styles from "./page.module.css";
@@ -8,6 +9,7 @@ export default function Home() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
   const [users, setUsers] = useState([]);
+  const router = useRouter()
   
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +23,9 @@ export default function Home() {
       const result = await response.json();
       setUsers(result);
     };
+    const handleUpdate = (userId) => {
+      router.push(`/update?id=${userId}`);
+    }
 
     if (token) {
       fetchData();
@@ -41,7 +46,9 @@ export default function Home() {
               <p>{user.age}</p>
               <p>{user.createdAt}</p>
               <br />
-  <p>{user._id}</p>
+              <button type="submit" onClick={handleUpdate(user._id)}>
+          تعديل
+        </button>
             </div>
           ))
         )
