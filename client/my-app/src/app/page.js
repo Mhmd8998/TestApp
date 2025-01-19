@@ -41,6 +41,7 @@ export default function Home() {
               <p>{user.age}</p>
               <p>{user.createdAt}</p>
               <br />
+  <p>{user._id}</p>
             </div>
           ))
         )
