@@ -23,6 +23,7 @@ export default function Home() {
       const result = await response.json();
       setUsers(result);
     };
+    
     const handleUpdate = (userId) => {
       router.push(`/update?id=${userId}`);
     }
@@ -31,31 +32,29 @@ export default function Home() {
       fetchData();
     }
   }, [token]);
- 
+
   return (
     <div className={styles.page}>
-  <main className={styles.main}>
-    <h1>Hello World</h1>
-    <div>
-      {
-          (
-          users.map((user) => (
-            <div key={user._id} className={styles.user}> 
-              <h1>{user.firstname} {user.lastname}</h1>
-              <p>{user.username}</p>
-              <p>{user.age}</p>
-              <p>{user.createdAt}</p>
-              <br />
-              <button type="submit" onClick={handleUpdate(user._id)}>
-          تعديل
-        </button>
-            </div>
-          ))
-        )
-      }
+      <main className={styles.main}>
+        <h1>Hello World</h1>
+        <div>
+          {
+            users.map((user) => (
+              <div key={user._id} className={styles.user}> 
+                <h1>{user.firstname} {user.lastname}</h1>
+                <p>{user.username}</p>
+                <p>{user.age}</p>
+                <p>{user.createdAt}</p>
+                <br />
+                <button type="submit" onClick={() => handleUpdate(user._id)}>
+                  تعديل
+                </button>
+              </div>
+            ))
+          }
+        </div>
+      </main>
     </div>
-  </main>
-</div>
-
   );
-  }
+    }
+  
