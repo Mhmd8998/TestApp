@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const validateObjectId = require("../middlewares/ValidateObjectId");
 const { getAllUser, updateUser } = require('../controller/User');
 const { verifyTokenAndAdmin, verifyTokenAndUserId } = require('../middlewares/verifyToken');
 
@@ -6,6 +7,6 @@ const { verifyTokenAndAdmin, verifyTokenAndUserId } = require('../middlewares/ve
 router.route('/users').get(verifyTokenAndAdmin, getAllUser);
 
 // Route to update a user by ID (accessible to the user themselves or an admin)
-router.route('/update/:id').put(verifyTokenAndUserId, updateUser);
+router.route('/update/:id').put(validateObjectId,verifyTokenAndUserId, updateUser);
 
 module.exports = router;
