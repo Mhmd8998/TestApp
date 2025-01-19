@@ -40,7 +40,7 @@ const Update = () => {
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
-            required
+            
           />
         </div>
         
@@ -52,7 +52,7 @@ const Update = () => {
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
-            required
+            
           />
         </div>
 
@@ -64,7 +64,7 @@ const Update = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            required
+            
           />
         </div>
 
@@ -78,7 +78,7 @@ const Update = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            required
+            
             minLength="6" // Optional: set password length requirement
           />
         </div>
