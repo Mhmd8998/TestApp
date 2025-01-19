@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { useState } from 'react';
-import {useRouter,useSearchParams} from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import styles from './update.module.css';
@@ -16,8 +16,9 @@ const Update = () => {
   const token = cookies.access_token;
 
   const router = useRouter();
-  const x = useSearchParams();
-  const userId = x.get("id");
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("id");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -28,16 +29,21 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8000/api/update/${userId}`, formData,{
-      headers: {
-    'Authorization': `Bearer ${token}`
+    try {
+      await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
       });
-    router.push("/");
+      router.push("/");
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
 
   return (
     <div className={styles['form-container']}>
-      <h1>تحديث البيانات </h1>
+      <h1>تحديث البيانات</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstname">الاسم الأول:</label>
@@ -47,10 +53,9 @@ const Update = () => {
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
-            
           />
         </div>
-        
+
         <div>
           <label htmlFor="lastname">الاسم الأخير:</label>
           <input
@@ -59,7 +64,6 @@ const Update = () => {
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
-            
           />
         </div>
 
@@ -71,11 +75,8 @@ const Update = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            
           />
         </div>
-
-        
 
         <div>
           <label htmlFor="password">كلمة المرور:</label>
@@ -85,7 +86,6 @@ const Update = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            
             minLength="6" // Optional: set password length requirement
           />
         </div>
@@ -99,4 +99,4 @@ const Update = () => {
 };
 
 export default Update;
-            
+      
