@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import {useRouter,useSearchParams} from 'next/navigation'
 import axios from 'axios';
 import styles from './update.module.css';
 
@@ -11,9 +11,11 @@ const Update = () => {
     username: '',
     password: '',
   });
+  
 
   const router = useRouter();
-
+  const x = useSearchParams();
+  const userId = x.get("id");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,7 +26,7 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put("http://localhost:8000/api/update", formData);
+    await axios.put(`http://localhost:8000/api/update/${userId}`, formData);
     router.push("/");
   };
 
