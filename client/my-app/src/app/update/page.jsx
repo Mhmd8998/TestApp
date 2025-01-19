@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import {useRouter,useSearchParams} from 'next/navigation'
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import styles from './update.module.css';
 
@@ -11,7 +12,8 @@ const Update = () => {
     username: '',
     password: '',
   });
-  
+  const [cookies] = useCookies(["access_token"]);
+  const token = cookies.access_token;
 
   const router = useRouter();
   const x = useSearchParams();
@@ -26,7 +28,10 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8000/api/update/${userId}`, formData);
+    await axios.put(`http://localhost:8000/api/update/${userId}`, formData,{
+      headers: {
+    'Authorization': `Bearer ${token}`
+      });
     router.push("/");
   };
 
