@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const {UserModel,validateUpdateUser} = require('../model/User');
-
+const bcrypt = require("bcryptjs");
 module.exports={
   getAllUser:asyncHandler(async (req,res) =>{
     try{
@@ -25,7 +25,7 @@ module.exports={
          bio:req.body.bio,
          firstname:req.body.firstname,
          lastname:req.body.lastname,
-         password:req.body.password
+         password:newPass
       }
     },{new:true});
     res.status(200).json({message:"update user successfully"});
