@@ -20,31 +20,25 @@ const Update = () => {
   const token = cookies.access_token;
   
   const router = useRouter();
-
-  // جلب بيانات المستخدم عند تحميل الصفحة
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8000/api/user/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        setFormData({
-          firstname: res.data.firstname,
-          lastname: res.data.lastname,
-          username: res.data.username,
-          password: '', // لا يتم تعبئة كلمة المرور بسبب الأمان
-        });
-        setLoading(false);
-      } catch (error) {
-        setStatusMessage('حدث خطأ أثناء جلب بيانات المستخدم');
-        setLoading(false);
-      }
+    const fetchData = async () => {
+      const response = await fetch('http://localhost:8000/api/user', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
+        },
+      });
+
+      const result = await response.json();
+      setUsers(result);
     };
 
-    fetchUserData();
-  }, [userId, token]);
+    if (token) {
+      fetchData();
+    }
+  }, [token]);
+  // جلب بيانات المستخدم عند تحميل الصفحة
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +50,7 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatusMessage(''); // إعادة تعيين الرسالة عند بداية الإرسال
+    // إعادة تعيين الرسالة عند بداية الإرسال
 
     try {
       const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
@@ -91,7 +85,7 @@ const Update = () => {
             type="text"
             id="firstname"
             name="firstname"
-            value={formData.firstname}
+            value={response.firstname}
             onChange={handleChange}
           />
         </div>
@@ -102,7 +96,7 @@ const Update = () => {
             type="text"
             id="lastname"
             name="lastname"
-            value={formData.lastname}
+            value={response.lastname}
             onChange={handleChange}
           />
         </div>
@@ -113,7 +107,7 @@ const Update = () => {
             type="text"
             id="username"
             name="username"
-            value={formData.username}
+            value={response.username}
             onChange={handleChange}
           />
         </div>
@@ -124,7 +118,7 @@ const Update = () => {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
+            value={response.password}
             onChange={handleChange}
             minLength="6" // Optional: set password length requirement
           />
