@@ -12,13 +12,9 @@ const Update = () => {
     username: '',
     password: '',
   });
-  const [cookies] = useCookies(["access_token"]);
-  const token = cookies.access_token;
-
+  
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("id");
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -29,7 +25,16 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8000/api/update/${userId}`,formData);
+    const searchParams = useSearchParams();
+    const [cookies] = useCookies(["access_token"]);
+    const token = cookies.access_token;
+    const userId = searchParams.get("id");
+    
+    await axios.put(`http://localhost:8000/api/update/${userId}`,formData,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
     
     router.push("/");
   };
