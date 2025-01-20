@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
 import styles from './update.module.css';
 
 const Update = () => {
@@ -12,13 +11,13 @@ const Update = () => {
     username: '',
     age: '',
   });
-  const [statusMessage, setStatusMessage] = useState(''); // حالة لتخزين الرسالة
-  const [loading, setLoading] = useState(true); // حالة لتحميل البيانات
+  const [statusMessage, setStatusMessage] = useState(''); // Store error/success message
+  const [loading, setLoading] = useState(true); // Loading state
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
-  const [statusType, setStatusType] = useState('');
+
   const router = useRouter();
 
   useEffect(() => {
@@ -27,27 +26,29 @@ const Update = () => {
         const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`, // إرسال التوكن في رأس الطلب
+            'Authorization': `Bearer ${token}`,  // Send token in request header
           },
         });
 
         if (!response.ok) {
-          throw new Error('حدث خطأ أثناء جلب البيانات');
+          // If response is not okay, throw an error
+          throw new Error(`API Error: ${response.statusText} (Status Code: ${response.status})`);
         }
 
         const result = await response.json();
-        // تحديث بيانات النموذج باستخدام البيانات المسترجعة
+        // Update form data with the fetched result
         setFormData({
           firstname: result.firstname,
           lastname: result.lastname,
           username: result.username,
-          age:result.age , // لا نعرض كلمة المرور من الخادم للأمان
+          age: result.age,
         });
 
         setLoading(false);
+
       } catch (error) {
-        console.error(error);
-        setStatusMessage('حدث خطأ أثناء جلب البيانات');
+        console.error("Error during fetching:", error); // Log detailed error
+        setStatusMessage('حدث خطأ أثناء جلب البيانات'); // Display error message
         setLoading(false);
       }
     };
@@ -55,7 +56,7 @@ const Update = () => {
     if (token) {
       fetchData();
     }
-  }, [token]);
+  }, [token, userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,7 +68,7 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatusMessage(''); // إعادة تعيين الرسالة عند بداية الإرسال
+    setStatusMessage(''); // Reset status message before submitting
 
     try {
       const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
@@ -78,15 +79,9 @@ const Update = () => {
       setStatusMessage('تم تحديث البيانات بنجاح');
       setTimeout(() => {
         router.push("/");
-      }, 2000); // الانتظار لعرض الرسالة قبل الانتقال
+      }, 2000); // Wait to show success message before redirect
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        setStatusMessage(`خطأ: ${error.response.data.message}`);
-        setStatusType('error');
-      } else {
-        setStatusMessage('حدث خطأ غير متوقع، حاول مرة أخرى');
-        setStatusType('error');
-      }
+      setStatusMessage('حدث خطأ أثناء التحديث');
     }
   };
 
@@ -134,22 +129,19 @@ const Update = () => {
         <div>
           <label htmlFor="age"> العمر:</label>
           <input
-            type="age"
+            type="number"
             id="age"
             name="age"
             value={formData.age}
             onChange={handleChange}
-            minLength="6" // Optional: set password length requirement
           />
         </div>
 
-        <button type="submit">
-          حفظ
-        </button>
+        <button type="submit">حفظ</button>
       </form>
 
       {statusMessage && (
-        <div className={`${styles['status-message']} ${statusType ? styles[statusType] : ''}`}>
+        <div className={styles['status-message']}>
           {statusMessage}
         </div>
       )}
@@ -158,4 +150,4 @@ const Update = () => {
 };
 
 export default Update;
-                                                  
+          
