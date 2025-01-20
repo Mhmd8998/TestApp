@@ -18,7 +18,7 @@ const Update = () => {
   const userId = searchParams.get("id");
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
-
+  const [statusType, setStatusType] = useState('');
   const router = useRouter();
 
   useEffect(() => {
