@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import styles from './Login.module.css'; // تأكد من استخدام التسمية الصحيحة لملف CSS
+import styles from './Login.model.css'; // تأكد من استخدام التسمية الصحيحة لملف CSS
 
 const Login = () => {
   const [formData, setFormData] = useState({
