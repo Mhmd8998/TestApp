@@ -31,8 +31,7 @@ module.exports = {
           username: req.body.username,
           firstname: req.body.firstname,
           lastname: req.body.lastname,
-          password: newPass || req.body.password // Only update password if newPass exists
-        }
+             }
       },
       { new: true }
     );
