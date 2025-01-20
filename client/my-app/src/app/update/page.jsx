@@ -12,6 +12,8 @@ const Update = () => {
     username: '',
     password: '',
   });
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("id");
   
   const router = useRouter();
   
@@ -24,20 +26,24 @@ const Update = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const searchParams = useSearchParams();
-    const [cookies] = useCookies(["access_token"]);
-    const token = cookies.access_token;
-    const userId = searchParams.get("id");
-    
-    await axios.put(`http://localhost:8000/api/update/${userId}`,formData,{
+  e.preventDefault();
+  const [cookies] = useCookies(["access_token"]);
+  const token = cookies.access_token;
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("id");
+
+  try {
+    await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        'Authorization': `Bearer ${token}`,
+      },
     });
-    
     router.push("/");
-  };
+  } catch (error) {
+    console.error("Error updating data:", error);
+    // عرض رسالة خطأ للمستخدم إذا رغبت
+  }
+};
 
   return (
     <div className={styles['form-container']}>
