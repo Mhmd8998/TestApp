@@ -1,0 +1,84 @@
+/* تنسيقات الشريط العلوي */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.navbar .logo h2 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navLink {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
+.logoutBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logoutBtn:hover {
+  background-color: #e53935;
+}
+
+/* تنسيقات قائمة التنقل على الشاشات الصغيرة */
+.menuIcon {
+  display: none;
+  font-size: 30px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navLinks {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    flex-direction: column;
+    display: none;
+  }
+
+  .navLinks.open {
+    display: flex;
+  }
+
+  .navLink {
+    margin: 15px 0;
+  }
+
+  .menuIcon {
+    display: block;
+  }
+  }
