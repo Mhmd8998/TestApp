@@ -34,7 +34,6 @@
   width: 100%;
   box-sizing: border-box;
 }
-.status-message {
 
 .form-container input:focus {
   border-color: #0070f3;
