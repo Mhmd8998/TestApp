@@ -10,6 +10,7 @@ export default function Home() {
   const [users, setUsers] = useState([]);
   const [errorMessage, setErrorMessage] = useState(""); // حالة لعرض الأخطاء
   const router = useRouter();
+  const idToken = localStorage.getItem("userId"); // تصحيح الأخطاء هنا
 
   // دالة للانتقال إلى صفحة التعديل
   const handleUpdate = (userId) => {
@@ -68,15 +69,19 @@ export default function Home() {
               <p>{user.age}</p>
               <p>{user.createdAt}</p>
               <br />
-              <button type="submit" onClick={() => handleUpdate(user._id)}>
-                تعديل
-              </button>
+              {/* تعديل المستخدم إذا كانت idToken تساوي _id */}
+              {idToken === user._id && (
+                <button type="submit" onClick={() => handleUpdate(user._id)}>
+                  تعديل
+                </button>
+              )}
             </div>
           ))
         ) : (
-          <p>لا توجد بيانات مستخدمين لعرضها</p> // في حال كانت قائمة المستخدمين فارغة
+          <p>لا توجد بيانات مستخدمين لعرضها</p>
         )}
       </main>
     </div>
   );
-}
+          }
+            
