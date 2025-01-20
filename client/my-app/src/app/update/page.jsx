@@ -74,6 +74,7 @@ const Update = () => {
       const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json', 
         },
       });
       setStatusMessage('تم تحديث البيانات بنجاح');
