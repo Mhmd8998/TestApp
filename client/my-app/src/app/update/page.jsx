@@ -47,7 +47,7 @@ const Update = () => {
         setLoading(false);
 
       } catch (error) {
-        console.error("Error during fetching:", error); // Log detailed error
+         
         setStatusMessage('حدث خطأ أثناء جلب البيانات'); // Display error message
         setLoading(false);
       }
@@ -82,7 +82,7 @@ const Update = () => {
         router.push("/");
       }, 2000); // Wait to show success message before redirect
     } catch (error) {
-      setStatusMessage('حدث خطأ أثناء التحديث');
+      setStatusMessage(error.data.message||error.message);
     }
   };
 
