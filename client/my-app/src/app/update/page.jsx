@@ -12,6 +12,7 @@ const Update = () => {
     username: '',
     password: '',
   });
+  const [statusMessage, setStatusMessage] = useState(''); // حالة لتخزين الرسالة
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
   const [cookies] = useCookies(["access_token"]);
@@ -28,20 +29,24 @@ const Update = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  try {
-    await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-    router.push("/");
-  } catch (error) {
-    console.error("Error updating data:", error);
-    // عرض رسالة خطأ للمستخدم إذا رغبت
-  }
-};
+    e.preventDefault();
+    setStatusMessage(''); // إعادة تعيين الرسالة عند بداية الإرسال
+
+    try {
+      const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      setStatusMessage('تم تحديث البيانات بنجاح');
+      setTimeout(() => {
+        router.push("/");
+      }, 2000); // الانتظار لعرض الرسالة قبل الانتقال
+    } catch (error) {
+      
+      setStatusMessage(res);
+    }
+  };
 
   return (
     <div className={styles['form-container']}>
@@ -96,9 +101,11 @@ const Update = () => {
           حفظ
         </button>
       </form>
+
+      {statusMessage && <div className={styles['status-message']}>{statusMessage}</div>} 
     </div>
   );
 };
 
 export default Update;
-      
+          
