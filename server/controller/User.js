@@ -31,6 +31,7 @@ module.exports = {
           username: req.body.username,
           firstname: req.body.firstname,
           lastname: req.body.lastname,
+          age:req.body.age
              }
       },
       { new: true }
