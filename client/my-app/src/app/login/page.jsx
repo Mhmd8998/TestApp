@@ -1,16 +1,16 @@
-"use client"
+"use client";
 import { useState } from 'react';
-import {useCookies} from 'react-cookie';
-import { useRouter } from 'next/navigation'
+import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import styles from './Login.model.css';
+import styles from './Login.module.css'; // تأكد من استخدام التسمية الصحيحة لملف CSS
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [_,setCookies] = useCookies(["access_token"]);
+  const [, setCookies] = useCookies(["access_token"]); // استخدم [, setCookies] بدلاً من [_, setCookies]
   const router = useRouter();
   const [statusMessage, setStatusMessage] = useState('');
 
@@ -24,18 +24,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const res = await axios.post("http://localhost:8000/api/auth/login", formData);
-      setCookies("access_token",res.data.token);
-      localStorage.setItem('userId', res.data.userId);
-      if(res.ok){
-        router.push("/");
+
+      // تحقق من حالة الاستجابة بواسطة `res.status`
+      if (res.status === 200) {
+        setCookies("access_token", res.data.token); // تعيين التوكن في الكوكيز
+        localStorage.setItem('userId', res.data.userId); // تعيين userId في localStorage
+        router.push("/"); // الانتقال إلى الصفحة الرئيسية بعد النجاح
+      } else {
+        setStatusMessage("حدث خطأ أثناء تسجيل الدخول.");
       }
-    }catch(error){
-      setStatusMessage(error.message); 
+    } catch (error) {
+      setStatusMessage(error.response?.data?.message || error.message); // التعامل مع الأخطاء بشكل أكثر مرونة
     }
-    
-    
   };
 
   return (
@@ -68,7 +70,7 @@ const Login = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            minLength="6" // Optional: set password length requirement
+            minLength="6" // فرض الحد الأدنى لطول كلمة المرور
           />
         </div>
 
@@ -81,4 +83,4 @@ const Login = () => {
 };
 
 export default Login;
-            
+      
