@@ -74,8 +74,6 @@ const validateLoginUser = (obj) => {
 const validateUpdateUser = (obj) => {
   const schema = joi.object({
     username: joi.string().trim().max(100).min(3),
-    email: joi.string().trim().max(100).min(3).email(),
-    password: joi.string().trim().max(100).min(8),
     firstname: joi.string().max(100).min(3),
     lastname: joi.string().max(100).min(3),
     age: joi.number(),  // Change age to number
