@@ -58,6 +58,11 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+}
 
 .user button:hover {
   background-color: #45a049;
