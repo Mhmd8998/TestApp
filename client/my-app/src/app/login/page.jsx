@@ -23,10 +23,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:8000/api/auth/login", formData);
-    setCookies("access_token",res.data.token);
+    try{
+      const res = await axios.post("http://localhost:8000/api/auth/login", formData);
+      setCookies("access_token",res.data.token);
+      localStorage.setItem('userId', res.data.userId);
+      if(res.ok){
+        router.push("/");
+      }
+    }catch(error){}
     
-    router.push("/");
+    
   };
 
   return (
