@@ -14,6 +14,8 @@ const Update = () => {
   });
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
+  const [cookies] = useCookies(["access_token"]);
+  const token = cookies.access_token;
   
   const router = useRouter();
   
@@ -27,8 +29,6 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  const [cookies] = useCookies(["access_token"]);
-  const token = cookies.access_token;
   
   try {
     await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
