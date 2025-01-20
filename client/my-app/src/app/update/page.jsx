@@ -53,7 +53,7 @@ const Update = () => {
             type="text"
             id="firstname"
             name="firstname"
-            value={req.user.firstname}
+            value={formData.firstname}
             onChange={handleChange}
           />
         </div>
