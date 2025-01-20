@@ -12,6 +12,7 @@ const Login = () => {
   });
   const [_,setCookies] = useCookies(["access_token"]);
   const router = useRouter();
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +31,9 @@ const Login = () => {
       if(res.ok){
         router.push("/");
       }
-    }catch(error){}
+    }catch(error){
+      setStatusMessage(error.message); 
+    }
     
     
   };
@@ -38,6 +41,11 @@ const Login = () => {
   return (
     <div className={styles['form-container']}>
       <h1>تسجيل الدخول</h1>
+      {statusMessage && (
+        <div className={styles['status-message']}>
+          {statusMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">الإيميل:</label>
