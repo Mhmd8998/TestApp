@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';  // إضافة استيراد axios
 import styles from './update.module.css';
 
 const Update = () => {
@@ -11,8 +12,8 @@ const Update = () => {
     username: '',
     age: '',
   });
-  const [statusMessage, setStatusMessage] = useState(''); // Store error/success message
-  const [loading, setLoading] = useState(true); // Loading state
+  const [statusMessage, setStatusMessage] = useState('');
+  const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
   const [cookies] = useCookies(["access_token"]);
@@ -22,21 +23,25 @@ const Update = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!userId) {
+        setStatusMessage('معرف المستخدم غير موجود.');
+        setLoading(false);
+        return;
+      }
+      
       try {
         const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,  // Send token in request header
+            'Authorization': `Bearer ${token}`,
           },
         });
 
         if (!response.ok) {
-          // If response is not okay, throw an error
           throw new Error(`API Error: ${response.statusText} (Status Code: ${response.status})`);
         }
 
         const result = await response.json();
-        // Update form data with the fetched result
         setFormData({
           firstname: result.firstname,
           lastname: result.lastname,
@@ -45,15 +50,13 @@ const Update = () => {
         });
 
         setLoading(false);
-
       } catch (error) {
-         
-        setStatusMessage('حدث خطأ أثناء جلب البيانات'); // Display error message
+        setStatusMessage('حدث خطأ أثناء جلب البيانات');
         setLoading(false);
       }
     };
 
-    if (token) {
+    if (token && userId) {
       fetchData();
     }
   }, [token, userId]);
@@ -68,21 +71,21 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatusMessage(''); // Reset status message before submitting
+    setStatusMessage('');
 
     try {
       const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
       });
       setStatusMessage('تم تحديث البيانات بنجاح');
       setTimeout(() => {
         router.push("/");
-      }, 2000); // Wait to show success message before redirect
+      }, 2000);
     } catch (error) {
-      setStatusMessage(error.data.message||error.message);
+      setStatusMessage(error.response?.data?.message || error.message || 'حدث خطأ أثناء التحديث');
     }
   };
 
@@ -151,4 +154,4 @@ const Update = () => {
 };
 
 export default Update;
-          
+        
