@@ -39,4 +39,12 @@ module.exports = {
 
     res.status(200).json({ message: "update user successfully" });
   }),
+  getUser:asyncHandler(async (req,res) => {
+    try {
+      const user = await UserModel.findById(req.params.id);
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(401).json({ message: err.message });
+    }
+  })
 };
