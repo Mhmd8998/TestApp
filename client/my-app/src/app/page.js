@@ -9,6 +9,7 @@ export default function Home() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
   const [users, setUsers] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(""); // Add error state
   const router = useRouter();
   
   const handleUpdate = (userId) => {
@@ -17,15 +18,26 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:8000/api/users', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
-        },
-      });
+      try {
+        const response = await fetch('http://localhost:8000/api/users', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
+          },
+        });
 
-      const result = await response.json();
-      setUsers(result);
+        if (!response.ok) {
+          throw new Error("حدث خطأ أثناء جلب البيانات"); // Error message if response is not ok
+        }
+
+        const result = await response.json();
+        setUsers(result); // Set users data if fetch is successful
+        setErrorMessage(""); // Clear any previous error message
+
+      } catch (error) {
+        console.error(error);
+        setErrorMessage(error.message); // Display error message if fetch fails
+      }
     };
 
     if (token) {
@@ -36,7 +48,14 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1>Hello World</h1>
+        
+        {/* Display error message if there's an error */}
+        {errorMessage && (
+          <div className={styles.error}>
+            {errorMessage}
+          </div>
+        )}
+        
         <div>
           {
             users.map((user) => (
@@ -56,5 +75,4 @@ export default function Home() {
       </main>
     </div>
   );
-    }
-  
+}
