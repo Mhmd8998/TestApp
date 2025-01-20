@@ -5,7 +5,7 @@ const { verifyTokenAndAdmin, verifyTokenAndUserId } = require('../middlewares/ve
 
 // Route to get all users (only accessible to admins)
 router.route('/users').get(verifyTokenAndAdmin, getAllUser);
-router.route('/user').get(validateObjectId,verifyTokenAndUserId, getUser);
+router.route('/user/:id').get(validateObjectId,verifyTokenAndUserId, getUser);
 
 // Route to update a user by ID (accessible to the user themselves or an admin)
 router.route('/update/:id').put(validateObjectId,verifyTokenAndUserId, updateUser);
