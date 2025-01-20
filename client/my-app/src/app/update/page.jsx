@@ -82,8 +82,10 @@ const Update = () => {
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         setStatusMessage(`خطأ: ${error.response.data.message}`);
+        setStatusType('error');
       } else {
         setStatusMessage('حدث خطأ غير متوقع، حاول مرة أخرى');
+        setStatusType('error');
       }
     }
   };
@@ -146,7 +148,11 @@ const Update = () => {
         </button>
       </form>
 
-      {statusMessage && <div className={styles['status-message']}>{statusMessage}</div>}
+      {statusMessage && (
+        <div className={`${styles['status-message']} ${statusType ? styles[statusType] : ''}`}>
+          {statusMessage}
+        </div>
+      )}
     </div>
   );
 };
