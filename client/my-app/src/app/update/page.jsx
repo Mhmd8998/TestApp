@@ -10,7 +10,7 @@ const Update = () => {
     firstname: '',
     lastname: '',
     username: '',
-    password: '',
+    age: '',
   });
   const [statusMessage, setStatusMessage] = useState(''); // حالة لتخزين الرسالة
   const [loading, setLoading] = useState(true); // حالة لتحميل البيانات
@@ -41,7 +41,7 @@ const Update = () => {
           firstname: result.firstname,
           lastname: result.lastname,
           username: result.username,
-          password: '', // لا نعرض كلمة المرور من الخادم للأمان
+          age:result.age , // لا نعرض كلمة المرور من الخادم للأمان
         });
 
         setLoading(false);
@@ -130,12 +130,12 @@ const Update = () => {
         </div>
 
         <div>
-          <label htmlFor="password">كلمة المرور:</label>
+          <label htmlFor="age"> العمر:</label>
           <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
+            type="age"
+            id="age"
+            name="age"
+            value={formData.age}
             onChange={handleChange}
             minLength="6" // Optional: set password length requirement
           />
