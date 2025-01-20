@@ -34,6 +34,22 @@
   width: 100%;
   box-sizing: border-box;
 }
+.status-message {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.status-message.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-message.error {
+  background-color: #dc3545;
+  color: white;
+}
 
 .form-container input:focus {
   border-color: #0070f3;
