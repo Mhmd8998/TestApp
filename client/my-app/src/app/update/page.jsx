@@ -29,11 +29,7 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8000/api/update/${userId}`,formData, {
-     headers: {
-    'Authorization': `Bearer ${token}`
-    }
-    });
+    await axios.put(`http://localhost:8000/api/update/${userId}`,formData);
     
     router.push("/");
   };
