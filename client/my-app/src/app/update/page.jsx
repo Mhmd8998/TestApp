@@ -18,27 +18,44 @@ const Update = () => {
   const userId = searchParams.get("id");
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
-  
+
   const router = useRouter();
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:8000/api/user', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
-        },
-      });
+      try {
+        const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`, // إرسال التوكن في رأس الطلب
+          },
+        });
 
-      const result = await response.json();
-      setUsers(result);
+        if (!response.ok) {
+          throw new Error('حدث خطأ أثناء جلب البيانات');
+        }
+
+        const result = await response.json();
+        // تحديث بيانات النموذج باستخدام البيانات المسترجعة
+        setFormData({
+          firstname: result.firstname,
+          lastname: result.lastname,
+          username: result.username,
+          password: '', // لا نعرض كلمة المرور من الخادم للأمان
+        });
+
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setStatusMessage('حدث خطأ أثناء جلب البيانات');
+        setLoading(false);
+      }
     };
 
     if (token) {
       fetchData();
     }
   }, [token]);
-  // جلب بيانات المستخدم عند تحميل الصفحة
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +67,7 @@ const Update = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // إعادة تعيين الرسالة عند بداية الإرسال
+    setStatusMessage(''); // إعادة تعيين الرسالة عند بداية الإرسال
 
     try {
       const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
@@ -85,7 +102,7 @@ const Update = () => {
             type="text"
             id="firstname"
             name="firstname"
-            value={response.firstname}
+            value={formData.firstname}
             onChange={handleChange}
           />
         </div>
@@ -96,7 +113,7 @@ const Update = () => {
             type="text"
             id="lastname"
             name="lastname"
-            value={response.lastname}
+            value={formData.lastname}
             onChange={handleChange}
           />
         </div>
@@ -107,7 +124,7 @@ const Update = () => {
             type="text"
             id="username"
             name="username"
-            value={response.username}
+            value={formData.username}
             onChange={handleChange}
           />
         </div>
@@ -118,7 +135,7 @@ const Update = () => {
             type="password"
             id="password"
             name="password"
-            value={response.password}
+            value={formData.password}
             onChange={handleChange}
             minLength="6" // Optional: set password length requirement
           />
@@ -129,10 +146,10 @@ const Update = () => {
         </button>
       </form>
 
-      {statusMessage && <div className={styles['status-message']}>{statusMessage}</div>} 
+      {statusMessage && <div className={styles['status-message']}>{statusMessage}</div>}
     </div>
   );
 };
 
 export default Update;
-      
+                                                  
