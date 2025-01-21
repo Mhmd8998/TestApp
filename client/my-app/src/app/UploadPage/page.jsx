@@ -1,11 +1,22 @@
 "use client"
 // pages/upload.js
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
-
+  const [userId, setUserId] = useState(null); 
+  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
+  const token = cookies.access_token;
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedUserId = localStorage.getItem("userId");
+      setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
+    }
+  }, []);
+  
   const handleFileChange = (e) => {
     setFile(e.target.files[0]); // تعيين الملف المرفوع
   };
