@@ -1,5 +1,5 @@
 "use client"
-import { useState ,useEffect} from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie'; // استيراد useCookies
 import styles from './navbar.module.css';
@@ -8,19 +8,10 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   
-  
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);  // سيتأكد أن الكود سيعمل فقط في المتصفح
-  }, []);
-
-  useEffect(() => {
-    if (isClient && typeof window !== 'undefined' && window.localStorage) {
+  if (localStorage) {
       const userId = localStorage.getItem("userId");
       const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
-    }
-  }, [isClient]);
+  }
   
 
   const handleLogout = async () => {
