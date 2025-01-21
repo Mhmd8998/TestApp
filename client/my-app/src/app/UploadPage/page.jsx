@@ -2,7 +2,7 @@
 // pages/upload.js
 import { useState ,useEffect} from 'react';
 import { useCookies } from 'react-cookie';
-import "./styles.css"
+import style from "./upimage.module.css"
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -55,7 +55,7 @@ const UploadPage = () => {
   };
 
   return (
-    <div>
+    <div className={style.main}>
       <h1>Upload Profile Photo</h1>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} />
