@@ -58,4 +58,5 @@ module.exports = {
     message: "Upload Photo Profile is successfully",
     file: req.file // يمكنك إضافة معلومات الملف المرفوع في الاستجابة إن أردت
   });
+})    
 };
