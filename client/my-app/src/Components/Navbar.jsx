@@ -1,30 +1,45 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './navbar.module.css';  // سيتم استيراد التنسيقات من ملف CSS خارجي
+import { useCookies } from 'react-cookie'; // استيراد useCookies
+import styles from './navbar.module.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
   const userId = localStorage.getItem("userId");
 
   // تحقق مما إذا كانت قيمة userId موجودة وليست فارغة أو null
   const isUserIdValid = userId && userId.trim() !== '';
 
   const handleLogout = async () => {
-    // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم
-    await fetch('http://localhost:8000/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include', // إرسال الكوكيز مع الطلب
-    });
+    try {
+      // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم مع الكوكيز
+      const response = await fetch('http://localhost:8000/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include', // إرسال الكوكيز مع الطلب
+        headers: {
+          'Authorization': `Bearer ${cookies.access_token}` // إرسال التوكن في الهيدر
+        }
+      });
 
-    // مسح الـ userId من localStorage
-    if (userId) {
+      if (!response.ok) {
+        throw new Error('فشل في تسجيل الخروج');
+      }
+
+      // مسح الـ userId من localStorage
       localStorage.removeItem('userId');
-    }
 
-    // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
-    router.push('/login');
+      // مسح التوكن من الكوكيز بعد تسجيل الخروج
+      removeCookie('access_token');
+
+      // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
+      router.push('/login');
+    } catch (error) {
+      console.error('حدث خطأ أثناء تسجيل الخروج:', error);
+      // هنا يمكنك إظهار رسالة خطأ للمستخدم إذا أردت
+    }
   };
 
   return (
@@ -51,4 +66,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-      
+            
