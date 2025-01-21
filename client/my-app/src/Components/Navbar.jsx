@@ -1,29 +1,32 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie'; // استيراد useCookies
 import styles from './navbar.module.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userId, setUserId] = useState(null); // لإدارة الـ userId
   const router = useRouter();
-  
-  if (localStorage) {
-      const userId = localStorage.getItem("userId");
-      const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
-  }
-  
+  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedUserId = localStorage.getItem("userId");
+      setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
+    }
+  }, []);
 
   const handleLogout = async () => {
-    try{
+    try {
       // مسح الـ userId من localStorage
       localStorage.removeItem('userId');
       // مسح التوكن من الكوكيز بعد تسجيل الخروج
       removeCookie('access_token');
-      setTimeout(()=>{
+      setTimeout(() => {
         // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
-      router.push('/login');
-      },4000)
+        router.push('/login');
+      }, 4000);
     } catch (error) {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
       // هنا يمكنك إظهار رسالة خطأ للمستخدم إذا أردت
@@ -54,4 +57,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-            
