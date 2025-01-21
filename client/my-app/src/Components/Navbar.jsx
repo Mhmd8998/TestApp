@@ -14,7 +14,7 @@ const Navbar = () => {
   const isUserIdValid = userId && userId.trim() !== '';
 
   const handleLogout = async () => {
-    
+    try{
       // مسح الـ userId من localStorage
       localStorage.removeItem('userId');
       // مسح التوكن من الكوكيز بعد تسجيل الخروج
