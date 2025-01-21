@@ -1,3 +1,4 @@
+"use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './navbar.module.css';  // سيتم استيراد التنسيقات من ملف CSS خارجي
