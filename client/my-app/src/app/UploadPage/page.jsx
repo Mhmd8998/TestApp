@@ -34,7 +34,7 @@ const UploadPage = () => {
     formData.append('profilePhoto', file);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', {
+      const res = await fetch('http://localhost:8000/api/auth/profile/upload-peofile-photo', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // إضافة التوكن إلى الهيدر
