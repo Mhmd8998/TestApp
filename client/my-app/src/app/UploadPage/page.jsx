@@ -53,7 +53,7 @@ const UploadPage = () => {
     formData.append('profilePhoto', file);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', { // Fixed typo in URL
+      const res = await fetch('http://localhost:8000/api/profile/upload-profile-photo', { // Fixed typo in URL
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // Add token to the header
@@ -62,34 +62,11 @@ const UploadPage = () => {
       });
 
       let responseMessage = 'Something went wrong.';
-      try {
-        const data = await res.json();
-        responseMessage = data.message || responseMessage;
-      } catch (error) {
-        responseMessage = 'Failed to parse response.';
-      }
-
-      if (res.ok) {
-        setMessage(responseMessage);
-      } else {
-        setMessage(responseMessage);
-      }
-    } catch (error) {
-      setMessage('Error: ' + error.message);
-    }
-  };
-
-  return (
-    <div className={style.main}>
-      <h1>Upload Profile Photo</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
-  );
-};
-
-export default UploadPage;
-        
+      // Check if response is JSON
+      const contentType = res.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const data = await res.json();
+          responseMessage = data.message || 
+          
