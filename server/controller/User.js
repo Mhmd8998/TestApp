@@ -48,15 +48,16 @@ module.exports = {
     }
   }),
   uploadProfile:asyncHandler(async (req,res)=>{
-    console.log(req.file);
+    
+  try {
+    const userId = req.body.userId; // افترض أنك ترسل userId مع الطلب
+    const imagePath = `/uploads/${req.file.filename}`; // مسار الصورة في السيرفر
 
-  if (!req.file) {
-    return res.status(400).json({ message: "No file uploaded!" }); // في حال لم يتم رفع صورة
+    // تحديث رابط الصورة في قاعدة البيانات
+    const user = await User.findByIdAndUpdate(userId, { profilePic: imagePath }, { new: true });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'فشل تحميل الصورة' });
   }
-
-  res.status(200).json({
-    message: "Upload Photo Profile is successfully",
-    file: req.file // يمكنك إضافة معلومات الملف المرفوع في الاستجابة إن أردت
-  });
 })    
 };
