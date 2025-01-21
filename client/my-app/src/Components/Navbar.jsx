@@ -39,7 +39,7 @@ const Navbar = () => {
         }
 
         const result = await response.json();
-        
+        setUserImage(result.imageProfile.url)
         setLoading(false);
       } catch (error) {
         setStatusMessage('حدث خطأ أثناء جلب البيانات');
@@ -72,6 +72,9 @@ const Navbar = () => {
       <div className={styles.logo}>
         <h2>BlogDb</h2>
       </div>
+      {userImage && (
+        <img src={userData.imageUrl} alt="User Profile" width={200} height={200} />
+      )}
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
