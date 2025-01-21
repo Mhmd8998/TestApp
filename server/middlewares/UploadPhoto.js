@@ -2,12 +2,12 @@ const path = require("path");
 const multer = require("multer");
 
 const photoStorage = multer.diskStorage({
-  destination: function (req, file, cb) { // تصحيح 'distination' إلى 'destination'
+  destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../images'));
   },
-  filename: function (req, file, cb) { // تصحيح 'fumction' إلى 'function'
+  filename: function (req, file, cb) {
     if (file) {
-      cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname); // تصحيح 'Data' إلى 'Date' وإصلاح التعبير العادي
+      cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
     } else {
       cb(null, false);
     }
@@ -17,13 +17,13 @@ const photoStorage = multer.diskStorage({
 const photoUpload = multer({
   storage: photoStorage,
   fileFilter: function (req, file, cb) {
-    if (file.mimetype.startsWith("image")) { // تصحيح 'startWith' إلى 'startsWith'
+    if (file.mimetype.startsWith("image")) {
       cb(null, true);
     } else {
-      cb({ message: "unsupported file format" }, false); // تصحيح 'unsuported' إلى 'unsupported'
+      cb({ message: "unsupported file format" }, false);
     }
   },
-  limits: { fileSize: 1024 * 1024 * 3 } // تصحيح 'filesize' إلى 'fileSize'
+  limits: { fileSize: 1024 * 1024 * 3 } // الحد الأقصى لحجم الملف 3 ميجابايت
 });
 
-module.exports = photoUpload; // تصحيح 'moudle' إلى 'module'
+module.exports = photoUpload;
