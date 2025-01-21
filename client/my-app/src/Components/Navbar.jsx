@@ -19,8 +19,10 @@ const Navbar = () => {
       localStorage.removeItem('userId');
       // مسح التوكن من الكوكيز بعد تسجيل الخروج
       removeCookie('access_token');
-      // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
+      setTimeout(()=>{
+        // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
       router.push('/login');
+      },4000)
     } catch (error) {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
       // هنا يمكنك إظهار رسالة خطأ للمستخدم إذا أردت
