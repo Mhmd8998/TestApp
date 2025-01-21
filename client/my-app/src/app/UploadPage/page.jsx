@@ -2,6 +2,7 @@
 // pages/upload.js
 import { useState ,useEffect} from 'react';
 import { useCookies } from 'react-cookie';
+import "./styles.css"
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
