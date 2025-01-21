@@ -53,7 +53,7 @@ const UploadPage = () => {
     formData.append('profilePhoto', file);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profile/upload-profile-photo', { // Fixed typo in URL
+      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', { // Fixed typo in URL
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // Add token to the header
