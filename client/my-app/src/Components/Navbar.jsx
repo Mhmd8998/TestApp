@@ -6,7 +6,7 @@ import styles from './navbar.module.css';  // سيتم استيراد التنس
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-
+  const userId = localStorage.getItem("userId");
   const handleLogout = async () => {
     // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم
     await fetch('http://localhost:8000/api/auth/logout', {
@@ -15,8 +15,9 @@ const Navbar = () => {
     });
 
     // مسح الـ userId من localStorage
-    localStorage.removeItem('userId');
-
+    if(userId){
+      localStorage.removeItem('userId');
+    }
     // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
     router.push('/login');
   };
