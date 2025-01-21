@@ -7,9 +7,20 @@ import styles from './navbar.module.css';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
-  const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
-  const userId = localStorage.getItem("userId");
+  
+  
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);  // سيتأكد أن الكود سيعمل فقط في المتصفح
+  }, []);
+
+  useEffect(() => {
+    if (isClient && typeof window !== 'undefined' && window.localStorage) {
+      const userId = localStorage.getItem("userId");
+      const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
+    }
+  }, [isClient]);
   // تحقق مما إذا كانت قيمة userId موجودة وليست فارغة أو null
   const isUserIdValid = userId && userId.trim() !== '';
 
