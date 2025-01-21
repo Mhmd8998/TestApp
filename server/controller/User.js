@@ -49,6 +49,13 @@ module.exports = {
   }),
   uploadProfile:asyncHandler(async (req,res)=>{
     console.log(req.file);
-    res.status(200).json({message:"Upload Photo Profile is successfully"});
-  })
+
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded!" }); // في حال لم يتم رفع صورة
+  }
+
+  res.status(200).json({
+    message: "Upload Photo Profile is successfully",
+    file: req.file // يمكنك إضافة معلومات الملف المرفوع في الاستجابة إن أردت
+  });
 };
