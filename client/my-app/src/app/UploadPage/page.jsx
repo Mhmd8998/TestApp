@@ -10,7 +10,7 @@ const UploadPage = () => {
   const [userId, setUserId] = useState(null); 
   const [cookies] = useCookies(["access_token"]); // useCookies with read-only access
   const token = cookies.access_token;
-  
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedUserId = localStorage.getItem("userId");
@@ -27,6 +27,11 @@ const UploadPage = () => {
         setMessage('File is too large. Max size is 5MB.');
         return;
       }
+      // Check file type (optional)
+      if (!['image/jpeg', 'image/png', 'image/gif'].includes(selectedFile.type)) {
+        setMessage('Invalid file type. Please upload an image (JPEG, PNG, or GIF).');
+        return;
+      }
       setFile(selectedFile); // Set the file if it's valid
     }
   };
@@ -39,11 +44,16 @@ const UploadPage = () => {
       return;
     }
 
+    if (!token) {
+      setMessage('No access token found. Please log in.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('profilePhoto', file);
 
     try {
-      const res = await fetch('http://localhost:8000/api/auth/profile/upload-profile-photo', { // Fixed typo in URL
+      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', { // Fixed typo in URL
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // Add token to the header
@@ -51,12 +61,18 @@ const UploadPage = () => {
         body: formData,
       });
 
-      if (res.ok) {
+      let responseMessage = 'Something went wrong.';
+      try {
         const data = await res.json();
-        setMessage(data.message || 'Profile photo uploaded successfully!');
+        responseMessage = data.message || responseMessage;
+      } catch (error) {
+        responseMessage = 'Failed to parse response.';
+      }
+
+      if (res.ok) {
+        setMessage(responseMessage);
       } else {
-        const errorData = await res.json();
-        setMessage(errorData.message || 'Something went wrong.');
+        setMessage(responseMessage);
       }
     } catch (error) {
       setMessage('Error: ' + error.message);
