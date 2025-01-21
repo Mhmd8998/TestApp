@@ -7,6 +7,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const userId = localStorage.getItem("userId");
+
   const handleLogout = async () => {
     // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم
     await fetch('http://localhost:8000/api/auth/logout', {
@@ -32,13 +33,11 @@ const Navbar = () => {
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
         <li><a href="/profile" className={styles.navLink}>الملف الشخصي</a></li>
         <li><a href="/contact" className={styles.navLink}>اتصل بنا</a></li>
-        {userId &&(
-           <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
-        ):(
-           <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
-        )
-          
-        }
+        {userId ? (
+          <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
+        ) : (
+          <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
+        )}
       </ul>
       <button className={styles.menuIcon} onClick={() => setIsMenuOpen(!isMenuOpen)}>
         ☰
@@ -48,4 +47,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
-  
+      
