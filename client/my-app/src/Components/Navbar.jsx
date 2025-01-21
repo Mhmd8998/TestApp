@@ -8,15 +8,49 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userId, setUserId] = useState(null); // لإدارة الـ userId
   const router = useRouter();
+  const [userImage, setUserImage] = useState(null);
   const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
-
+  const token = cookies.access_token
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedUserId = localStorage.getItem("userId");
       setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
+      
     }
   }, []);
+ useEffect(() => {
+    const fetchData = async () => {
+      if (!userId) {
+        setStatusMessage('معرف المستخدم غير موجود.');
+        setLoading(false);
+        return;
+      }
+      
+      try {
+        const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.statusText} (Status Code: ${response.status})`);
+        }
+
+        const result = await response.json();
+        
+        setLoading(false);
+      } catch (error) {
+        setStatusMessage('حدث خطأ أثناء جلب البيانات');
+        setLoading(false);
+      }
+    };
+
+    if (token && userId) {
+      fetchData();
+    }
+  }, [token, userId]);
   const handleLogout = async () => {
     try {
       // مسح الـ userId من localStorage
