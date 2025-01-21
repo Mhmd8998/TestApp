@@ -14,26 +14,11 @@ const Navbar = () => {
   const isUserIdValid = userId && userId.trim() !== '';
 
   const handleLogout = async () => {
-    try {
-      // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم مع الكوكيز
-      const response = await fetch('http://localhost:8000/api/auth/logout', {
-        method: 'POST',
-        credentials: 'include', // إرسال الكوكيز مع الطلب
-        headers: {
-          'Authorization': `Bearer ${cookies.access_token}` // إرسال التوكن في الهيدر
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('فشل في تسجيل الخروج');
-      }
-
+    
       // مسح الـ userId من localStorage
       localStorage.removeItem('userId');
-
       // مسح التوكن من الكوكيز بعد تسجيل الخروج
       removeCookie('access_token');
-
       // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
       router.push('/login');
     } catch (error) {
