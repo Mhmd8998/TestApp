@@ -7,25 +7,24 @@ import styles from './navbar.module.css';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userId, setUserId] = useState(null); // لإدارة الـ userId
+  const [userImage, setUserImage] = useState(null); // لحفظ صورة المستخدم
   const router = useRouter();
-  const [userImage, setUserImage] = useState(null);
   const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
-  const token = cookies.access_token
+  const token = cookies.access_token;
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedUserId = localStorage.getItem("userId");
       setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
-      
     }
   }, []);
- useEffect(() => {
+
+  useEffect(() => {
     const fetchData = async () => {
       if (!userId) {
-        setStatusMessage('معرف المستخدم غير موجود.');
-        setLoading(false);
         return;
       }
-      
+
       try {
         const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
           method: 'GET',
@@ -39,11 +38,9 @@ const Navbar = () => {
         }
 
         const result = await response.json();
-        setUserImage(result.imageProfile.url)
-        setLoading(false);
+        setUserImage(result.imageProfile.url); // تعيين رابط الصورة
       } catch (error) {
-        setStatusMessage('حدث خطأ أثناء جلب البيانات');
-        setLoading(false);
+        console.error('حدث خطأ أثناء جلب البيانات:', error);
       }
     };
 
@@ -51,6 +48,7 @@ const Navbar = () => {
       fetchData();
     }
   }, [token, userId]);
+
   const handleLogout = async () => {
     try {
       // مسح الـ userId من localStorage
@@ -63,7 +61,6 @@ const Navbar = () => {
       }, 4000);
     } catch (error) {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
-      // هنا يمكنك إظهار رسالة خطأ للمستخدم إذا أردت
     }
   };
 
@@ -73,7 +70,7 @@ const Navbar = () => {
         <h2>BlogDb</h2>
       </div>
       {userImage && (
-        <img src={userData.imageUrl} alt="User Profile" width={200} height={200} />
+        <img src={userImage} alt="User Profile" width={200} height={200} />
       )}
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
