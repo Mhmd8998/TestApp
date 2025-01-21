@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookieParser = require('cookie-parser');
+
 const { validateRegisterUser, validateLoginUser, UserModel } = require("../model/User");
 
 module.exports = {
@@ -51,8 +51,5 @@ module.exports = {
     const token = user.generateAuthToken();
     return res.status(200).json({ message: "Logged in successfully", token ,userId});
   }),
-  logOut:asyncHandler(async (req,res) =>{
-     res.clearCookie('access_token'); // مسح التوكن من الكوكيز
-     res.json({ message: 'Logged out successfully' });
-  })
+  
 };
