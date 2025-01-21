@@ -68,5 +68,37 @@ const UploadPage = () => {
       if (contentType && contentType.includes('application/json')) {
         try {
           const data = await res.json();
-          responseMessage = data.message || 
-          
+          responseMessage = data.message || responseMessage;
+        } catch (error) {
+          responseMessage = 'Failed to parse response.';
+        }
+      } else {
+        // If not JSON, handle it as text
+        const text = await res.text();
+        responseMessage = `Unexpected response format: ${text}`;
+      }
+
+      if (res.ok) {
+        setMessage(responseMessage);
+      } else {
+        setMessage(responseMessage);
+      }
+    } catch (error) {
+      setMessage('Error: ' + error.message);
+    }
+  };
+
+  return (
+    <div className={style.main}>
+      <h1>Upload Profile Photo</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="file" onChange={handleFileChange} />
+        <button type="submit">Upload</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
+  );
+};
+
+export default UploadPage;
+  
