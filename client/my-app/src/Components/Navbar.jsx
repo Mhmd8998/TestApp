@@ -31,7 +31,13 @@ const Navbar = () => {
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
         <li><a href="/profile" className={styles.navLink}>الملف الشخصي</a></li>
         <li><a href="/contact" className={styles.navLink}>اتصل بنا</a></li>
-        <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
+        {userId &&(
+           <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
+        ):(
+           <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
+        )
+          
+        }
       </ul>
       <button className={styles.menuIcon} onClick={() => setIsMenuOpen(!isMenuOpen)}>
         ☰
