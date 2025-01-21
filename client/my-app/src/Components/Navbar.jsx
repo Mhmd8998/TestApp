@@ -70,7 +70,7 @@ const Navbar = () => {
         <h2>BlogDb</h2>
       </div>
       {userImage && (
-        <img src={userImage} alt="User Profile" width={200} height={200} />
+        <img src={userImage} alt="User Profile" width={75} height={75} />
       )}
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
