@@ -1,6 +1,6 @@
 "use client"
 // pages/upload.js
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { useCookies } from 'react-cookie';
 
 const UploadPage = () => {
