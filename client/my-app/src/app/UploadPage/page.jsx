@@ -50,7 +50,7 @@ const UploadPage = () => {
     }
 
     const formData = new FormData();
-    formData.append('profilePhoto', file);
+    formData.append('image', file);
 
     try {
       const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', { // Fixed typo in URL
