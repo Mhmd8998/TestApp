@@ -1,7 +1,7 @@
 /* styles.css */
 
 /* ضبط إعدادات الخطوط والألوان العامة */
-body {
+.main {
   font-family: 'Arial', sans-serif;
   background-color: #f4f7fa;
   margin: 0;
@@ -13,7 +13,7 @@ body {
 }
 
 /* إعدادات تصميم الحاوية الرئيسية */
-div {
+.main {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@ div {
 }
 
 /* تصميم العنوان */
-h1 {
+.main h1 {
   font-size: 24px;
   color: #333;
   text-align: center;
@@ -31,14 +31,14 @@ h1 {
 }
 
 /* تصميم نموذج الرفع */
-form {
+.main form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
 /* تصميم إدخال الملف */
-input[type="file"] {
+.main input[type="file"] {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -47,7 +47,7 @@ input[type="file"] {
 }
 
 /* تصميم الزر */
-button {
+.main button {
   padding: 10px 20px;
   background-color: #007BFF;
   border: none;
@@ -58,12 +58,12 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.main button:hover {
   background-color: #0056b3;
 }
 
 /* تصميم الرسائل */
-p {
+.main p {
   text-align: center;
   font-size: 14px;
   color: #d9534f;
@@ -72,16 +72,16 @@ p {
 
 /* إضافة استجابة للهواتف */
 @media (max-width: 600px) {
-  div {
+  .main {
     width: 90%;
     padding: 15px;
   }
   
-  h1 {
+  .main h1 {
     font-size: 20px;
   }
 
-  button {
+  .main button {
     font-size: 14px;
     padding: 8px 16px;
   }
