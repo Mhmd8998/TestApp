@@ -1,4 +1,3 @@
-"use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './navbar.module.css';  // سيتم استيراد التنسيقات من ملف CSS خارجي
@@ -8,6 +7,9 @@ const Navbar = () => {
   const router = useRouter();
   const userId = localStorage.getItem("userId");
 
+  // تحقق مما إذا كانت قيمة userId موجودة وليست فارغة أو null
+  const isUserIdValid = userId && userId.trim() !== '';
+
   const handleLogout = async () => {
     // مسح التوكن من الكوكيز عن طريق إرسال طلب إلى الخادم
     await fetch('http://localhost:8000/api/auth/logout', {
@@ -16,9 +18,10 @@ const Navbar = () => {
     });
 
     // مسح الـ userId من localStorage
-    if(userId){
+    if (userId) {
       localStorage.removeItem('userId');
     }
+
     // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
     router.push('/login');
   };
@@ -33,7 +36,7 @@ const Navbar = () => {
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
         <li><a href="/profile" className={styles.navLink}>الملف الشخصي</a></li>
         <li><a href="/contact" className={styles.navLink}>اتصل بنا</a></li>
-        {userId ? (
+        {isUserIdValid ? (
           <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
         ) : (
           <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
