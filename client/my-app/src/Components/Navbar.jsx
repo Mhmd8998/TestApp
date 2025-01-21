@@ -21,8 +21,7 @@ const Navbar = () => {
       const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
     }
   }, [isClient]);
-  // تحقق مما إذا كانت قيمة userId موجودة وليست فارغة أو null
-  const isUserIdValid = userId && userId.trim() !== '';
+  
 
   const handleLogout = async () => {
     try{
@@ -50,7 +49,7 @@ const Navbar = () => {
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
         <li><a href="/profile" className={styles.navLink}>الملف الشخصي</a></li>
         <li><a href="/contact" className={styles.navLink}>اتصل بنا</a></li>
-        {isUserIdValid ? (
+        {userId ? (
           <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
         ) : (
           <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
