@@ -33,9 +33,7 @@ export default function Home() {
           },
         });
 
-        if (!response.ok) {
-          throw new Error("حدث خطأ أثناء جلب البيانات"); // رسالة خطأ في حال لم تكن الاستجابة صحيحة
-        }
+        
 
         const result = await response.json();
         setUsers(result); // تعيين البيانات إذا كانت الاستجابة ناجحة
