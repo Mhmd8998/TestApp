@@ -1,9 +1,17 @@
+const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 
+const imagesDir = path.join(__dirname, 'images');
+
+// التأكد من وجود المجلد "images"، وإذا لم يكن موجودًا، يتم إنشاؤه
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'images'));
+    cb(null, imagesDir);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname)); // إضافة الطابع الزمني لتجنب التعارض
