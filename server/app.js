@@ -10,6 +10,16 @@ const DB_URL =process.env.DB_URL
 const PORT = process.env.PORT||5000
 
 
+
+const uploadsDir = path.join(__dirname, 'images');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+// جعل مجلد "uploads" متاحًا للوصول عبر HTTP
+app.use('/images', express.static(uploadsDir)); // <-- تقديم الملفات من مجلد "uploads"
+
+
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json()); 
