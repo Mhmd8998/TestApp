@@ -1,8 +1,14 @@
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
+
+
+
 const Auth = require("./router/Auth");
 const Users = require("./router/User");
 const bodyParser = require('body-parser');
