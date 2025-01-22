@@ -13,10 +13,12 @@ const Navbar = () => {
   const token = cookies.access_token;
 
   
-    if (typeof window !== 'undefined' && window.localStorage) {
+    useEffect(()=>{
+      if (typeof window !== 'undefined' && window.localStorage) {
       const storedUserId = localStorage.getItem("userId");
       setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
-    }
+      }
+    },[])
 
 
   useEffect(() => {
