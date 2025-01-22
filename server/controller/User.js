@@ -64,7 +64,7 @@ module.exports = {
     const imagePath = `/uploads/${req.file.filename}`;
 
     // تحديث رابط الصورة في قاعدة البيانات
-    const user = await User.findByIdAndUpdate(
+    const user = await UserModel.findByIdAndUpdate(
       userId, 
       { profilePic: imagePath }, 
       { new: true } // إعادة الكائن المحدث
