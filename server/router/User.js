@@ -13,7 +13,7 @@ router.route('/update/:id').put(validateObjectId,verifyTokenAndUserId, updateUse
 // مسار رفع صورة الملف الشخصي
 router.route("/profile/upload-peofile-photo").post(
   // تحقق من التوكن ومعرف المستخدم
-  upload.single('profilePic'),  // رفع صورة الملف الشخصي
+  upload.single('image'),  // رفع صورة الملف الشخصي
   uploadProfile  // التعامل مع البيانات بعد رفع الصورة
 );
 
