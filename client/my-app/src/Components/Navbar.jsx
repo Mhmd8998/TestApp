@@ -46,15 +46,15 @@ const Navbar = () => {
       localStorage.removeItem('userId');
       // مسح التوكن من الكوكيز بعد تسجيل الخروج
       removeCookie('access_token');
-      setTimeout(() => {
-        // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
-        router.push('/login');
-      }, 4000);
+      
+      // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
+      router.push('/login');
+      console.log(userImage);
     } catch (error) {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
     }
   };
-  console.log(userImage);
+  
 
   return (
     <nav className={styles.navbar}>
