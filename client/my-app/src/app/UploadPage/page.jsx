@@ -1,5 +1,4 @@
 "use client"
-// pages/upload.js
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import style from "./upimage.module.css";
@@ -10,6 +9,7 @@ const UploadPage = () => {
   const [userId, setUserId] = useState(null); 
   const [cookies] = useCookies(["access_token"]); // useCookies with read-only access
   const token = cookies.access_token;
+  const [isUploading, setIsUploading] = useState(false); // State to track the uploading status
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -44,16 +44,24 @@ const UploadPage = () => {
       return;
     }
 
+    if (!userId) {
+      setMessage('User ID not found. Please log in.');
+      return;
+    }
+
     if (!token) {
       setMessage('No access token found. Please log in.');
       return;
     }
 
+    setIsUploading(true); // Set uploading state to true when the upload starts
+
     const formData = new FormData();
     formData.append('image', file);
-    formData.append('userId',userId);
+    formData.append('userId', userId);
+
     try {
-      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', { // Fixed typo in URL
+      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // Add token to the header
@@ -62,9 +70,8 @@ const UploadPage = () => {
       });
 
       let responseMessage = 'Something went wrong.';
-      // Check if response is JSON
       const contentType = res.headers.get('content-type');
-      
+
       if (contentType && contentType.includes('application/json')) {
         try {
           const data = await res.json();
@@ -73,7 +80,6 @@ const UploadPage = () => {
           responseMessage = 'Failed to parse response.';
         }
       } else {
-        // If not JSON, handle it as text
         const text = await res.text();
         responseMessage = `Unexpected response format: ${text}`;
       }
@@ -85,6 +91,8 @@ const UploadPage = () => {
       }
     } catch (error) {
       setMessage('Error: ' + error.message);
+    } finally {
+      setIsUploading(false); // Reset uploading state after the process is done
     }
   };
 
@@ -92,13 +100,18 @@ const UploadPage = () => {
     <div className={style.main}>
       <h1>Upload Profile Photo</h1>
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+        <input 
+          type="file" 
+          onChange={handleFileChange} 
+          accept="image/jpeg, image/png, image/gif" // Limit file types for better UX
+        />
+        <button type="submit" disabled={isUploading}>Upload</button>
       </form>
+      {isUploading && <p>Uploading...</p>} {/* Show message while uploading */}
       {message && <p>{message}</p>}
     </div>
   );
 };
 
 export default UploadPage;
-  
+    
