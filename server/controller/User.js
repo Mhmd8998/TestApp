@@ -47,17 +47,39 @@ module.exports = {
       res.status(401).json({ message: err.message });
     }
   }),
-  uploadProfile:asyncHandler(async (req,res)=>{
-    
+  uploadProfile: asyncHandler(async (req, res) => {
   try {
-    const userId = req.body.userId; // افترض أنك ترسل userId مع الطلب
-    const imagePath = `/uploads/${req.file.filename}`; // مسار الصورة في السيرفر
+    // تحقق من وجود userId في الجسم
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ message: 'userId غير موجود في الطلب' });
+    }
+
+    // تحقق من وجود صورة تم تحميلها
+    if (!req.file) {
+      return res.status(400).json({ message: 'لم يتم تحميل أي صورة' });
+    }
+
+    // مسار الصورة في السيرفر
+    const imagePath = `/uploads/${req.file.filename}`;
 
     // تحديث رابط الصورة في قاعدة البيانات
-    const user = await User.findByIdAndUpdate(userId, { profilePic: imagePath }, { new: true });
+    const user = await User.findByIdAndUpdate(
+      userId, 
+      { profilePic: imagePath }, 
+      { new: true } // إعادة الكائن المحدث
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'المستخدم غير موجود' });
+    }
+
+    // إرسال المستخدم مع الصورة المحدثة
     res.json(user);
   } catch (error) {
+    console.error(error); // لطباعة الخطأ في السيرفر
     res.status(500).json({ message: 'فشل تحميل الصورة' });
   }
-})    
+})
+        
 };
