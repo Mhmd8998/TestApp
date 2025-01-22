@@ -57,7 +57,7 @@ const UploadPage = () => {
     setIsUploading(true); // Set uploading state to true when the upload starts
 
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('profilePic', file);
     formData.append('userId', userId);
 
     try {
@@ -102,6 +102,7 @@ const UploadPage = () => {
       <form onSubmit={handleSubmit}>
         <input 
           type="file" 
+          name="profilePic"
           onChange={handleFileChange} 
           accept="image/jpeg, image/png, image/gif" // Limit file types for better UX
         />
