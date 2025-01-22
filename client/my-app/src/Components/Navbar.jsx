@@ -12,19 +12,15 @@ const Navbar = () => {
   const [cookies, setCookies, removeCookie] = useCookies(["access_token"]); // استخدام الكوكيز
   const token = cookies.access_token;
 
-  useEffect(() => {
+  
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedUserId = localStorage.getItem("userId");
       setUserId(storedUserId); // تعيين الـ userId المسترجع من localStorage
     }
-  }, []);
+
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!userId) {
-        return;
-      }
-
       try {
         const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
           method: 'GET',
@@ -42,7 +38,7 @@ const Navbar = () => {
     if (token && userId) {
       fetchData();
     }
-  }, []);
+  }, [token, userId]);
 
   const handleLogout = async () => {
     try {
