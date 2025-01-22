@@ -42,7 +42,7 @@ const Navbar = () => {
     if (token && userId) {
       fetchData();
     }
-  }, [token, userId]);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -58,6 +58,7 @@ const Navbar = () => {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
     }
   };
+  console.log(userImage);
 
   return (
     <nav className={styles.navbar}>
