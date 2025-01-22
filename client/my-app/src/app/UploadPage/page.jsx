@@ -54,7 +54,7 @@ const UploadPage = () => {
       <form onSubmit={handleSubmit}>
         <input 
           type="file" 
-          name="profilePic"
+          name="image"
           onChange={handleFileChange} 
           accept="image/jpeg, image/png, image/gif" // Limit file types for better UX
         />
