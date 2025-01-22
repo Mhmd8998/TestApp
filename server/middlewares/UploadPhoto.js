@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 
-const imagesDir = path.join(__dirname, 'images');
+const imagesDir = path.join(__dirname, '..', 'images');
 
 // التأكد من وجود المجلد "images"، وإذا لم يكن موجودًا، يتم إنشاؤه
 if (!fs.existsSync(imagesDir)) {
