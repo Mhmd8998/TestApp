@@ -32,13 +32,8 @@ const Navbar = () => {
             'Authorization': `Bearer ${token}`,
           },
         });
-
-        if (!response.ok) {
-          throw new Error(`API Error: ${response.statusText} (Status Code: ${response.status})`);
-        }
-
         const result = await response.json();
-        setUserImage(result.imageProfile.url); // تعيين رابط الصورة
+        setUserImage(result.profilePic); // تعيين رابط الصورة
       } catch (error) {
         console.error('حدث خطأ أثناء جلب البيانات:', error);
       }
@@ -70,7 +65,7 @@ const Navbar = () => {
         <h2>BlogDb</h2>
       </div>
       {userImage && (
-        <img src={userImage} alt="User Profile" width={75} height={75} />
+        <img src={userImage} alt="User Profile" width={40} height={40} />
       )}
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
