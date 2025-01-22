@@ -37,9 +37,7 @@ const Update = () => {
           },
         });
 
-        if (!response.ok) {
-          throw new Error(`API Error: ${response.statusText} (Status Code: ${response.status})`);
-        }
+        
 
         const result = await response.json();
         setFormData({
