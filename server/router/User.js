@@ -12,7 +12,7 @@ router.route('/user/:id').get(validateObjectId,verifyTokenAndUserId, getUser);
 router.route('/update/:id').put(validateObjectId,verifyTokenAndUserId, updateUser);
 // مسار رفع صورة الملف الشخصي
 router.route("/profile/upload-peofile-photo").post(
-  verifyTokenAndUserId,  // تحقق من التوكن ومعرف المستخدم
+  // تحقق من التوكن ومعرف المستخدم
   upload.single('profilePic'),  // رفع صورة الملف الشخصي
   uploadProfile  // التعامل مع البيانات بعد رفع الصورة
 );
