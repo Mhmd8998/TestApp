@@ -21,6 +21,9 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if(!userId){
+        return;
+      }
       try {
         const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
           method: 'GET',
