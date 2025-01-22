@@ -54,7 +54,7 @@ const Navbar = () => {
       
       // إعادة التوجيه إلى صفحة تسجيل الدخول بعد تسجيل الخروج
       router.push('/login');
-      console.log(userImage);
+      
     } catch (error) {
       console.error('حدث خطأ أثناء تسجيل الخروج:', error);
     }
@@ -64,11 +64,12 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        <h2>BlogDb</h2>
-      </div>
-      {userImage && (
+        {userImage && (
         <img src={userImage} alt="User Profile" width={40} height={40} />
       )}
+        <p>{userImage}</p>
+      </div>
+      
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
         <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
