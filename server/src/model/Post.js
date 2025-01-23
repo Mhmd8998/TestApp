@@ -31,7 +31,7 @@ const validateCreatePost = (obj)=>{
   })
   return schema.validate(obj);
 };
-const vaidateUpdatePost = (obj)=>{
+const validateUpdatePost = (obj)=>{
   const schema = Joi.object({
     title:Joi.string().min(5),
     description:Joi.string().min(5)
@@ -42,5 +42,5 @@ const vaidateUpdatePost = (obj)=>{
 module.exports = {
   PostModel,
   validateCreatePost,
-  vaidateUpdatePost
+  validateUpdatePost
 };
