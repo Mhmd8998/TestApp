@@ -4,12 +4,8 @@ const bcrypt = require("bcryptjs");
 
 module.exports = {
   getAllUser: asyncHandler(async (req, res) => {
-    try {
-      const users = await UserModel.find();
+      const users = await UserModel.find().populate("-password");
       res.status(200).json(users);
-    } catch (err) {
-      res.status(401).json({ message: err.message });
-    }
   }),
 
   updateUser: asyncHandler(async (req, res) => {
