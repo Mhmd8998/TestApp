@@ -35,16 +35,12 @@ module.exports = {
 
     res.status(200).json({ message: "update user successfully" });
   }),
-  getUser:asyncHandler(async (req,res) => {
-    try {
-      const user = await UserModel.findById(req.params.id);
-      res.status(200).json(user);
-    } catch (err) {
-      res.status(401).json({ message: err.message });
-    }
+  getUser:asyncHandler(async (req,res) => {    
+      const user = await UserModel.findById(req.params.id).populate("-password");
+      res.status(200).json(user);    
   }),
   uploadProfile: asyncHandler(async (req, res) => {
-  try {
+  
     // تحقق من وجود userId في الجسم
     const { userId } = req.body;
     if (!userId) {
@@ -72,10 +68,7 @@ module.exports = {
 
     // إرسال المستخدم مع الصورة المحدثة
     res.json(user);
-  } catch (error) {
-    console.error(error); // لطباعة الخطأ في السيرفر
-    res.status(500).json({ message: 'فشل تحميل الصورة' });
-  }
+  
 })
         
 };
