@@ -25,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/login", formData);
+      const res = await axios.post("https://test-app-7svt.vercel.app/api/auth/login", formData);
 
       // تحقق من حالة الاستجابة بواسطة `res.status`
       if (res.status === 200) {
