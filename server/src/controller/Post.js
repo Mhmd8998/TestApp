@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const {PostModel,validateCreatePost,validateUpdatePost} = require("../model/Post");
 
 module.exports= {
-  const createPost = asyncHandler(async (req, res) => {
+  createPost: asyncHandler(async (req, res) => {
   // التحقق من صحة البيانات
   const { error } = validateCreatePost(req.body);
   //فحص البيانات المدخلة
