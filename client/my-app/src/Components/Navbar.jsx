@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie'; // استيراد useCookies
 import styles from './navbar.module.css';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -64,10 +65,14 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.logo}>
-        {userImage && (
+  {userImage && (
+    <Link href="/UploadPage">
+      <a>
         <img src={userImage} alt="User Profile" width={40} height={40} />
-      )}
-      </div>
+      </a>
+    </Link>
+  )}
+</div>
       
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
         <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
