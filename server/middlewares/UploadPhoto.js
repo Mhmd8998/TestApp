@@ -7,8 +7,12 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '..', 'images')); // تحديد المسار للمجلد "uploads"
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // إضافة الطابع الزمني لتجنب التعارض
-  }
+    if(file){
+      cb(null, Date.now() + path.extname(file.originalname)); // إضافة الطابع الزمني لتجنب التعارض
+    }else{
+      cb(null,false);
+    }
+    }
 });
 
 // إعداد multer مع الفلاتر (التحقق من نوع الملف وحجمه)
