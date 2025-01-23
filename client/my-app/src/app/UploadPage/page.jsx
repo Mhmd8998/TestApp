@@ -34,7 +34,7 @@ const UploadPage = () => {
     formData.append('userId', userId);
 
     try {
-      const res = await fetch('http://localhost:8000/api/profile/upload-peofile-photo', {
+      const res = await fetch('https://test-app-7svt.vercel.app/api/profile/upload-peofile-photo', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,  // Add token to the header
