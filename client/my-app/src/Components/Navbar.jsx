@@ -34,7 +34,7 @@ const Navbar = () => {
           },
         });
         const result = await response.json();
-        setUserImage(result.profilePic); // تعيين رابط الصورة
+        setUserImage("http://localhost:8000"+result.profilePic); // تعيين رابط الصورة
       } catch (error) {
         console.error('حدث خطأ أثناء جلب البيانات:', error);
       }
