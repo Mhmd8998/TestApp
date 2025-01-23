@@ -26,7 +26,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8000/api/auth/register", formData);
+    await axios.post("https://test-app-7svt.vercel.app/api/auth/register", formData);
     router.push("/login");
   };
 
