@@ -72,7 +72,7 @@ const Update = () => {
     setStatusMessage('');
 
     try {
-      const res = await axios.put(`http://localhost:8000/api/update/${userId}`, formData, {
+      const res = await axios.put(`https://test-app-7svt.vercel.app/api/update/${userId}`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
