@@ -26,7 +26,7 @@ export default function Home() {
       }
 
       try {
-        const response = await fetch('http://localhost:8000/api/users', {
+        const response = await fetch('https://test-app-7svt.vercel.app/api/users', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,  // إرسال التوكن في رأس الطلب
