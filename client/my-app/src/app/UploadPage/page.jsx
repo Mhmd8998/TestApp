@@ -30,7 +30,7 @@ const UploadPage = () => {
     setIsUploading(true); // Set uploading state to true when the upload starts
 
     const formData = new FormData();
-    formData.append('profilePic', file);
+    formData.append('image', file);
     formData.append('userId', userId);
 
     try {
