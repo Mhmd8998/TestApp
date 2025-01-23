@@ -67,9 +67,9 @@ const Navbar = () => {
       <div className={styles.logo}>
   {userImage && (
     <Link href="/UploadPage">
-      <a>
+    
         <img src={userImage} alt="User Profile" width={40} height={40} />
-      </a>
+      
     </Link>
   )}
 </div>
