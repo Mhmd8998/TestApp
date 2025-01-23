@@ -35,7 +35,7 @@ const Navbar = () => {
           },
         });
         const result = await response.json();
-        setUserImage("http://localhost:8000"+result.profilePic); // تعيين رابط الصورة
+        setUserImage("https://test-app-7svt.vercel.app"+result.profilePic); // تعيين رابط الصورة
       } catch (error) {
         console.error('حدث خطأ أثناء جلب البيانات:', error);
       }
