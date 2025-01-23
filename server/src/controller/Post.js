@@ -27,20 +27,26 @@ module.exports= {
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
+    const post = await PostModel.findById(req.params.id);
+    // التحقق من وجود المنشور بعد التحديث
+    if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+    }
+    //تحقق من ان المستخدم نفسه صاحب المنشور
+    if(req.user.id !== post.userid.toString()){
+      return res.status(401).json({ message: "you are not allow !" });
+    }
     // تحديث بيانات المنشور
-    const post = await PostModel.findByIdAndUpdate(
+    const postUpdate = await PostModel.findByIdAndUpdate(
         req.params.id,
         {$set: {
               title: req.body.title,
               description: req.body.description,
         }
-        },{ new: true });
-    // التحقق من وجود المنشور بعد التحديث
-    if (!post) {
-        return res.status(404).json({ message: "Post not found" });
-    }
+        },{ new: true }).populate("userId",["-password"]);
+    
     // رسالة اتمام العملية بنجاح
-    return res.status(200).json({ message: "Updated Post Successfully", post });
+    return res.status(200).json(postUpdate);
 })
                                     
 
