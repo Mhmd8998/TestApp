@@ -1,7 +1,5 @@
 require('dotenv').config();
 const path = require('path');
-const fs = require('fs');
-const multer = require('multer');
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -17,13 +15,9 @@ const PORT = process.env.PORT||5000
 
 
 
-const uploadsDir = path.join(__dirname, 'images');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
 
 // جعل مجلد "uploads" متاحًا للوصول عبر HTTP
-app.use('/images', express.static(uploadsDir)); // <-- تقديم الملفات من مجلد "uploads"
+app.use('/images', express.static(path.join(__dirname, '/images')));
 
 
 app.use(express.json());
