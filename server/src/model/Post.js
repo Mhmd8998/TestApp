@@ -25,17 +25,17 @@ const PostSchema = new mongoose.Schema({
 const PostModel = mongoose.model("Post", PostSchema);
 
 const validateCreatePost = (obj)=>{
-  const schema = joi.object({
-    title:joi.string().min(5).required(),
-    description:joi.string().min(5).required(),
-    userId:joi.string().required()
+  const schema = Joi.object({
+    title:Joi.string().min(5).required(),
+    description:Joi.string().min(5).required(),
+    userId:Joi.string().required()
   })
   return schema.validate(obj);
 };
 const vaidateUpdatePost = (obj)=>{
-  const schema = joi.object({
-    title:joi.string().min(5),
-    description:joi.string().min(5)
+  const schema = Joi.object({
+    title:Joi.string().min(5),
+    description:Joi.string().min(5)
   })
   return schema.validate(obj);
 }
