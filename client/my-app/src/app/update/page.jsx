@@ -30,7 +30,7 @@ const Update = () => {
       }
       
       try {
-        const response = await fetch(`http://localhost:8000/api/user/${userId}`, {
+        const response = await fetch(`https://test-app-7svt.vercel.app/api/user/${userId}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
