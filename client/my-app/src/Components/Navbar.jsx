@@ -67,7 +67,6 @@ const Navbar = () => {
         {userImage && (
         <img src={userImage} alt="User Profile" width={40} height={40} />
       )}
-        <p>{userImage}</p>
       </div>
       
       <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
