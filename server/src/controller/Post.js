@@ -14,7 +14,7 @@ module.exports= {
     const post = new PostModel({
       title,
       description,
-      userId:req.user._id
+      userId:req.user.id
     });
     // حفظ المنشور في قاعدة البيانات
     await post.save();    
