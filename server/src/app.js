@@ -9,6 +9,7 @@ const cors = require("cors");
 
 const Auth = require("./router/Auth");
 const Users = require("./router/User");
+const Post = require("./router/Post");
 const bodyParser = require('body-parser');
 const DB_URL =process.env.DB_URL
 const PORT = process.env.PORT||5000
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 // Add the leading "/" to the API path
 app.use("/api/auth", Auth);
 app.use("/api", Users);
+app.use("/api", Post);
 
 mongoose.connect(DB_URL)
   .then(res => console.log("connected db"))
