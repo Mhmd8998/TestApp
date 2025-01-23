@@ -9,12 +9,12 @@ module.exports= {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });  // تم تصحيح typo إلى "details" واستخدام status 400
   }
-  const { title, description, userId } = req.body;
+  const { title, description} = req.body;
     // إنشاء منشور جديد
     const post = new PostModel({
       title,
       description,
-      userId,
+      userId:req.user._id
     });
     // حفظ المنشور في قاعدة البيانات
     await post.save();    
