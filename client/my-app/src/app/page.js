@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 export default function Home() {
   const [cookies] = useCookies(["access_token"]);
@@ -16,39 +17,39 @@ export default function Home() {
   };
 
   useEffect(() => {
-  const fetchData = async () => {
-    if (!token) {
-      setErrorMessage("يجب عليك تسجيل الدخول أولًا");
-      return router push("/login");
-    }
-
-    try {
-      const response = await fetch('https://test-app-7svt.vercel.app/api/users', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      
-      if (!response.ok) {
-        const text = await response.text();
-        console.error(`Network response was not ok: ${text}`);
-        setErrorMessage("حدث خطأ في جلب البيانات. يرجى التحقق من الرابط أو المحاولة لاحقًا.");
-        return; // إنهاء الدالة هنا بدلاً من إطلاق استثناء
+    const fetchData = async () => {
+      if (!token) {
+        setErrorMessage("يجب عليك تسجيل الدخول أولًا");
+        return router.push("/login");
       }
 
-      const result = await response.json();
-      setUsers(result);
-      setErrorMessage("");
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("حدث خطأ أثناء جلب البيانات. يرجى المحاولة مرة أخرى لاحقًا.");
-    }
-  };
+      try {
+        const response = await fetch('https://test-app-7svt.vercel.app/api/users', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-  fetchData();
-}, [token]);
+        if (!response.ok) {
+          const text = await response.text();
+          console.error(`Network response was not ok: ${text}`);
+          setErrorMessage("حدث خطأ في جلب البيانات. يرجى التحقق من الرابط أو المحاولة لاحقًا.");
+          return; // إنهاء الدالة هنا بدلاً من إطلاق استثناء
+        }
+
+        const result = await response.json();
+        setUsers(result);
+        setErrorMessage("");
+      } catch (error) {
+        console.error(error);
+        setErrorMessage("حدث خطأ أثناء جلب البيانات. يرجى المحاولة مرة أخرى لاحقًا.");
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
   return (
     <div className="container">
       <main className="my-5">
@@ -82,4 +83,4 @@ export default function Home() {
       </main>
     </div>
   );
-          }
+}
