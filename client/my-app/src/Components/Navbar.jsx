@@ -63,6 +63,7 @@ const Navbar = () => {
   
 
   return (
+    
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <div className="navbar-brand">
@@ -85,22 +86,22 @@ const Navbar = () => {
         <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link href="/">
+              <Link href="/" passHref>
                 <a className="nav-link">الرئيسية</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/about">
+              <Link href="/about" passHref>
                 <a className="nav-link">عن الموقع</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/profile">
+              <Link href="/profile" passHref>
                 <a className="nav-link">الملف الشخصي</a>
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/contact">
+              <Link href="/contact" passHref>
                 <a className="nav-link">اتصل بنا</a>
               </Link>
             </li>
@@ -121,6 +122,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+  
   );
 };
 
