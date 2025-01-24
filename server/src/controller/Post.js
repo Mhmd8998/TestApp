@@ -47,7 +47,10 @@ module.exports= {
     
     // رسالة اتمام العملية بنجاح
     return res.status(200).json(postUpdate);
-})
+}),
+  getAllPost:asyncHandler(async (req,res) => {
+    const posts = await PostModel.find().populate("userId",["-password -email -createdAt -createdUp"]);
+  })
                                     
 
 };
