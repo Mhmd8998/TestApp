@@ -16,36 +16,35 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!token) {
-        setErrorMessage("يجب عليك تسجيل الدخول أولًا");
-        return;
+  const fetchData = async () => {
+    if (!token) {
+      setErrorMessage("يجب عليك تسجيل الدخول أولًا");
+      return;
+    }
+
+    try {
+      const response = await fetch('https://test-app-7svt.vercel.app/api/users', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      try {
-        const response = await fetch('https://test-app-7svt.vercel.app/api/users', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
+      const result = await response.json();
+      setUsers(result);
+      setErrorMessage("");
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("حدث خطأ أثناء جلب البيانات. يرجى المحاولة مرة أخرى لاحقًا.");
+    }
+  };
 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const result = await response.json();
-        setUsers(result);
-        setErrorMessage("");
-      } catch (error) {
-        console.error(error);
-        setErrorMessage("حدث خطأ أثناء جلب البيانات. يرجى المحاولة مرة أخرى لاحقًا.");
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
+  fetchData();
+}, [token]);
   return (
     <div className="container">
       <main className="my-5">
