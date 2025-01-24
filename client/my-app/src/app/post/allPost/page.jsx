@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios'; // استيراد axios
 import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
-export default function Home() {
+export default function AllPost() {
   const [cookies] = useCookies(["access_token"]);
   const token = cookies.access_token;
   const [posts, setPosts] = useState([]);
@@ -34,7 +34,7 @@ export default function Home() {
     };
 
     fetchData();
-  }, [token,posts]);
+  }, [token, posts]);
 
   return (
     <div className="container">
@@ -49,13 +49,14 @@ export default function Home() {
         {/* عرض المنشورات إذا كانت البيانات موجودة */}
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div className="card border-dark mb-3" style="max-width: 18rem;" key={post._id}>
-               <div className="card-header">{post.userId.username} <span>{post.createdAt}</span></div>
-               <div className="card-body">
-                 <h5 className="card-title">{post.title}</h5>
-                 <p className="card-text">{post.description}</p>
-                </div>
-    
+            <div className="card border-dark mb-3" style={{ maxWidth: '18rem' }} key={post._id}>
+              <div className="card-header">
+                {post.userId.username} <span>{new Date(post.createdAt).toLocaleString()}</span>
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">{post.title}</h5>
+                <p className="card-text">{post.description}</p>
+              </div>
             </div>
           ))
         ) : (
@@ -66,4 +67,4 @@ export default function Home() {
       </main>
     </div>
   );
-  }
+        }
