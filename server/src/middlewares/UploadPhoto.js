@@ -4,15 +4,15 @@ const path = require('path');
 // إعداد التخزين باستخدام multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..', 'images')); // تحديد المسار للمجلد "uploads"
+    cb(null, path.join('/tmp')); // تحديد المسار المؤقت
   },
   filename: function (req, file, cb) {
-    if(file){
+    if (file) {
       cb(null, Date.now() + path.extname(file.originalname)); // إضافة الطابع الزمني لتجنب التعارض
-    }else{
-      cb(null,false);
+    } else {
+      cb(null, false);
     }
-    }
+  }
 });
 
 // إعداد multer مع الفلاتر (التحقق من نوع الملف وحجمه)
