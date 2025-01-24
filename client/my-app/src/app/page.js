@@ -31,6 +31,12 @@ export default function Home() {
       });
 
       
+      if (!response.ok) {
+        const text = await response.text();
+        console.error(`Network response was not ok: ${text}`);
+        setErrorMessage("حدث خطأ في جلب البيانات. يرجى التحقق من الرابط أو المحاولة لاحقًا.");
+        return; // إنهاء الدالة هنا بدلاً من إطلاق استثناء
+      }
 
       const result = await response.json();
       setUsers(result);
