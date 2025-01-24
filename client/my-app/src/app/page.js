@@ -19,7 +19,7 @@ export default function Home() {
   const fetchData = async () => {
     if (!token) {
       setErrorMessage("يجب عليك تسجيل الدخول أولًا");
-      return;
+      return router push("/login");
     }
 
     try {
