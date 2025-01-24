@@ -50,10 +50,10 @@ export default function AllPost() {
         {posts.length > 0 ? (
           posts.map((post) => (
             <div className="card border-dark mb-3" style={{ maxWidth: '18rem' }} key={post._id}>
-              <div className="card-header">
-                {post.userId.username} <span>{new Date(post.createdAt).toLocaleString()}</span>
+              <div className="card-header ">
+                {post.userId.username} 
               </div>
-              <div className="card-body">
+              <div className="card-body w-100">
                 <h5 className="card-title">{post.title}</h5>
                 <p className="card-text">{post.description}</p>
               </div>
