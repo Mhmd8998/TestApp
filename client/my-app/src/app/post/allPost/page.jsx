@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import axios from 'axios'; // استيراد axios
 import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 export default function Home() {
@@ -11,7 +12,6 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState(""); // حالة لعرض الأخطاء
   const router = useRouter();
   
-
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
@@ -26,13 +26,7 @@ export default function Home() {
           },
         });
 
-        if (!response.ok) {
-          setErrorMessage("حدث خطأ في جلب البيانات. يرجى التحقق من الرابط أو المحاولة لاحقًا.");
-          return; // إنهاء الدالة هنا بدلاً من إطلاق استثناء
-        }
-
-        const result = await response.json();
-        setPosts(result);
+        setPosts(response.data);
         setErrorMessage("");
       } catch (error) {
         setErrorMessage("حدث خطأ أثناء جلب البيانات. يرجى المحاولة مرة أخرى لاحقًا.");
@@ -45,8 +39,31 @@ export default function Home() {
   return (
     <div className="container">
       <main className="my-5">
-        
+        {/* عرض رسالة الخطأ إذا كان هناك خطأ */}
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+        )}
+
+        {/* عرض المنشورات إذا كانت البيانات موجودة */}
+        {posts.length > 0 ? (
+          posts.map((post) => (
+            <div className="card mb-3" key={post._id}>
+              <div className="card-body">
+                <h5 className="card-title">{post.title}</h5>
+                <p className="card-text">{post.description}</p>
+                <p className="card-text">{post.userId.username}</p>
+                <p className="card-text"><small className="text-muted">{new Date(post.createdAt).toLocaleDateString()}</small></p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="alert alert-warning" role="alert">
+            لا توجد منشورات لعرضها
+          </div>
+        )}
       </main>
     </div>
   );
-      }
+    }
