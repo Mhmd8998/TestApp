@@ -61,19 +61,19 @@ export default function Home() {
         {/* عرض المستخدمين إذا كانت البيانات موجودة */}
         {users.length > 0 ? (
           users.map((user) => (
-            <div key={user._id} className={styles.user}>
-              <h1>{user.firstname} {user.lastname}</h1>
-              <p>{user.username}</p>
-              <p>{user.age}</p>
-              <p>{user.createdAt}</p>
-              <br />
+            <div className="card" style="width: 18rem;">
+              <div className="card-body">
+              <h5 className="card-title">{user.firstname} {user.lastname}</h5>
+              <p className="card-text">{user.createdAt}</p>    
               {/* تعديل المستخدم إذا كانت idToken تساوي _id */}
               {idToken === user._id && (
-                <button type="submit" onClick={() => handleUpdate(user._id)}>
+                <button type="submit" onClick={() => handleUpdate(user._id)} className="btn btn-primary">
                   تعديل
                 </button>
               )}
-            </div>
+             </div>
+           </div>
+            
           ))
         ) : (
           <p>لا توجد بيانات مستخدمين لعرضها</p>
