@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 const Footer = () => {
   return (
-    <footer className="bg-light text-center text-lg-start">
+    <footer className="bg-light text-center text-lg-start fixed-bottom">
       <div className="container p-4">
         <p className="text-center">© 2025 جميع الحقوق محفوظة</p>
         <ul className="list-unstyled d-flex justify-content-center">
