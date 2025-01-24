@@ -38,7 +38,7 @@ export default function AllPost() {
 
   return (
     <div className="container">
-      <main className="my-5 d-flex justify-content-center ">
+      <main className="my-5  justify-content-center ">
         {/* عرض رسالة الخطأ إذا كان هناك خطأ */}
         {errorMessage && (
           <div className="alert alert-danger" role="alert">
