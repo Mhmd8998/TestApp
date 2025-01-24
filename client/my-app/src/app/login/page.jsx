@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import styles from './Login.model.css'; // تأكد من استخدام التسمية الصحيحة لملف CSS
+import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -41,32 +41,34 @@ const Login = () => {
   };
 
   return (
-    <div className={styles['form-container']}>
+    <div className="container mt-5">
       <h1>تسجيل الدخول</h1>
       {statusMessage && (
-        <div className={styles['status-message']}>
+        <div className="alert alert-danger" role="alert">
           {statusMessage}
         </div>
       )}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">الإيميل:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">الإيميل:</label>
           <input
             type="email"
             id="email"
             name="email"
+            className="form-control"
             value={formData.email}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="password">كلمة المرور:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">كلمة المرور:</label>
           <input
             type="password"
             id="password"
             name="password"
+            className="form-control"
             value={formData.password}
             onChange={handleChange}
             required
@@ -74,7 +76,7 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">
+        <button type="submit" className="btn btn-primary">
           تسجيل دخول
         </button>
       </form>
@@ -83,4 +85,3 @@ const Login = () => {
 };
 
 export default Login;
-      
