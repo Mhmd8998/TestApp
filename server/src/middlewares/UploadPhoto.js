@@ -4,7 +4,7 @@ const path = require('path');
 // إعداد التخزين باستخدام multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join('/tmp')); // تحديد المسار المؤقت
+    cb(null, path.join('/images')); // تحديد المسار المؤقت
   },
   filename: function (req, file, cb) {
     if (file) {
