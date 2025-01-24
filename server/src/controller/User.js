@@ -54,7 +54,7 @@ module.exports = {
     }
 
     // مسار الصورة في السيرفر
-    const imagePath = `/tmp/${req.file.filename}`;
+    const imagePath = `/images/${req.file.filename}`;
 
     // تحديث رابط الصورة في قاعدة البيانات
     const user = await UserModel.findByIdAndUpdate(
