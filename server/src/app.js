@@ -18,7 +18,7 @@ const PORT = process.env.PORT||5000
 
 
 // جعل مجلد "uploads" متاحًا للوصول عبر HTTP
-app.use('/tmp', express.static(path.join(__dirname, '/tmp')));
+app.use('/images', express.static(path.join(__dirname, '/images')));
 
 
 app.use(express.json());
