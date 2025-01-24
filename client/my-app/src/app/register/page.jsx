@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import styles from './Register.model.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -31,84 +31,90 @@ const Register = () => {
   };
 
   return (
-    <div className={styles['form-container']}>
+    <div className="container mt-5">
       <h1>إنشاء حساب</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstname">الاسم الأول:</label>
+        <div className="mb-3">
+          <label htmlFor="firstname" className="form-label">الاسم الأول:</label>
           <input
             type="text"
             id="firstname"
             name="firstname"
+            className="form-control"
             value={formData.firstname}
             onChange={handleChange}
             required
           />
         </div>
         
-        <div>
-          <label htmlFor="lastname">الاسم الأخير:</label>
+        <div className="mb-3">
+          <label htmlFor="lastname" className="form-label">الاسم الأخير:</label>
           <input
             type="text"
             id="lastname"
             name="lastname"
+            className="form-control"
             value={formData.lastname}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="username">اسم المستخدم:</label>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">اسم المستخدم:</label>
           <input
             type="text"
             id="username"
             name="username"
+            className="form-control"
             value={formData.username}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="email">الإيميل:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">الإيميل:</label>
           <input
             type="email"
             id="email"
             name="email"
+            className="form-control"
             value={formData.email}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="age">العمر:</label>
+        <div className="mb-3">
+          <label htmlFor="age" className="form-label">العمر:</label>
           <input
             type="number"
             id="age"
             name="age"
+            className="form-control"
             value={formData.age}
             onChange={handleChange}
             required
           />
         </div>
 
-        <div>
-          <label htmlFor="password">كلمة المرور:</label>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">كلمة المرور:</label>
           <input
             type="password"
             id="password"
             name="password"
+            className="form-control"
             value={formData.password}
             onChange={handleChange}
             required
-            minLength="6" // Optional: set password length requirement
+            minLength="6" // فرض الحد الأدنى لطول كلمة المرور
           />
         </div>
 
-        <button type="submit">
-          register
+        <button type="submit" className="btn btn-primary">
+          تسجيل
         </button>
       </form>
     </div>
@@ -116,4 +122,3 @@ const Register = () => {
 };
 
 export default Register;
-            
