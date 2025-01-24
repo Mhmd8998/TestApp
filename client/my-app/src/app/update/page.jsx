@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';  // إضافة استيراد axios
-import styles from './update.module.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 const Update = () => {
   const [formData, setFormData] = useState({
@@ -37,7 +37,9 @@ const Update = () => {
           },
         });
 
-        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
         const result = await response.json();
         setFormData({
@@ -59,97 +61,4 @@ const Update = () => {
     }
   }, [token, userId]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatusMessage('');
-
-    try {
-      const res = await axios.put(`https://test-app-7svt.vercel.app/api/update/${userId}`, formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      setStatusMessage('تم تحديث البيانات بنجاح');
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
-    } catch (error) {
-      setStatusMessage(error.response?.data?.message || error.message || 'حدث خطأ أثناء التحديث');
-    }
-  };
-
-  if (loading) {
-    return <div>جاري تحميل البيانات...</div>;
-  }
-
-  return (
-    <div className={styles['form-container']}>
-      <h1>تحديث البيانات</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstname">الاسم الأول:</label>
-          <input
-            type="text"
-            id="firstname"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="lastname">الاسم الأخير:</label>
-          <input
-            type="text"
-            id="lastname"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="username">اسم المستخدم:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="age"> العمر:</label>
-          <input
-            type="number"
-            id="age"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit">حفظ</button>
-      </form>
-
-      {statusMessage && (
-        <div className={styles['status-message']}>
-          {statusMessage}
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Update;
-        
+  const handleChange
