@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import style from "./upimage.module.css";
+import 'bootstrap/dist/css/bootstrap.min.css'; // استيراد Bootstrap
 
 const UploadPage = () => {
   const [file, setFile] = useState(null);
@@ -37,34 +37,4 @@ const UploadPage = () => {
       const res = await fetch('https://test-app-7svt.vercel.app/api/profile/upload-peofile-photo', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,  // Add token to the header
-        },
-        body: formData,
-      });
-    } catch (error) {
-      setMessage('Error: ' + error.message);
-    } finally {
-      setIsUploading(false); // Reset uploading state after the process is done
-    }
-  };
-
-  return (
-    <div className={style.main}>
-      <h1>Upload Profile Photo</h1>
-      <form onSubmit={handleSubmit}>
-        <input 
-          type="file" 
-          name="image"
-          onChange={handleFileChange} 
-          accept="image/jpeg, image/png, image/gif" // Limit file types for better UX
-        />
-        <button type="submit" disabled={isUploading}>Upload</button>
-      </form>
-      {isUploading && <p>Uploading...</p>} {/* Show message while uploading */}
-      {message && <p>{message}</p>}
-    </div>
-  );
-};
-
-export default UploadPage;
-    
+          'Authorization':
