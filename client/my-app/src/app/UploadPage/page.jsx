@@ -34,7 +34,43 @@ const UploadPage = () => {
     formData.append('userId', userId);
 
     try {
-      const res = await fetch('https://test-app-7svt.vercel.app/api/profile/upload-peofile-photo', {
+      const res = await fetch('https://test-app-7svt.vercel.app/api/profile/upload-profile-photo', {
         method: 'POST',
         headers: {
-          'Authorization':
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+      setMessage('File uploaded successfully!');
+    } catch (error) {
+      setMessage('Error: ' + error.message);
+    } finally {
+      setIsUploading(false); // Reset uploading state after the process is done
+    }
+  };
+
+  return (
+    <div className="container mt-5">
+      <h1>Upload Profile Photo</h1>
+      <form onSubmit={handleSubmit} className="mb-3">
+        <input 
+          type="file" 
+          name="image"
+          onChange={handleFileChange} 
+          className="form-control mb-3"
+          accept="image/jpeg, image/png, image/gif" // Limit file types for better UX
+        />
+        <button type="submit" className="btn btn-primary" disabled={isUploading}>Upload</button>
+      </form>
+      {isUploading && <p>Uploading...</p>} {/* Show message while uploading */}
+      {message && <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'}`} role="alert">{message}</div>}
+    </div>
+  );
+};
+
+export default UploadPage;
