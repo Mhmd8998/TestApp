@@ -11,7 +11,7 @@ router.route('/user/:id').get(validateObjectId,verifyTokenAndUserId, getUser);
 // Route to update a user by ID (accessible to the user themselves or an admin)
 router.route('/update/:id').put(validateObjectId,verifyTokenAndUserId, updateUser);
 // مسار رفع صورة الملف الشخصي
-router.route("/profile/upload-peofile-photo").post(
+router.route("/profile/upload-profile-photo").post(
   verifyToken,// تحقق من التوكن ومعرف المستخدم
   upload.single('image'),  // رفع صورة الملف الشخصي
   uploadProfile  // التعامل مع البيانات بعد رفع الصورة
