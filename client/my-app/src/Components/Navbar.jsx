@@ -63,31 +63,63 @@ const Navbar = () => {
   
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.logo}>
-  {userImage && (
-    <Link href="/UploadPage">
-    
-        <img src={userImage} alt="User Profile" width={40} height={40} />
-      
-    </Link>
-  )}
-</div>
-      
-      <ul className={`${styles.navLinks} ${isMenuOpen ? styles.open : ''}`}>
-        <li><a href="/" className={styles.navLink}>الرئيسية</a></li>
-        <li><a href="/about" className={styles.navLink}>عن الموقع</a></li>
-        <li><a href="/profile" className={styles.navLink}>الملف الشخصي</a></li>
-        <li><a href="/contact" className={styles.navLink}>اتصل بنا</a></li>
-        {userId ? (
-          <li><button onClick={handleLogout} className={styles.logoutBtn}>تسجيل الخروج</button></li>
-        ) : (
-          <li><button onClick={() => router.push('/login')} className={styles.logoutBtn}>تسجيل الدخول</button></li>
-        )}
-      </ul>
-      <button className={styles.menuIcon} onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        ☰
-      </button>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <div className="navbar-brand">
+          {userImage && (
+            <Link href="/UploadPage">
+              <img src={userImage} alt="User Profile" width={40} height={40} className="d-inline-block align-top" />
+            </Link>
+          )}
+        </div>
+        <button
+          className="navbar-toggler"
+          type="button"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-controls="navbarNav"
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className={`collapse navbar-collapse ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link href="/">
+                <a className="nav-link">الرئيسية</a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/about">
+                <a className="nav-link">عن الموقع</a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/profile">
+                <a className="nav-link">الملف الشخصي</a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/contact">
+                <a className="nav-link">اتصل بنا</a>
+              </Link>
+            </li>
+            {userId ? (
+              <li className="nav-item">
+                <button onClick={handleLogout} className="btn btn-outline-danger">
+                  تسجيل الخروج
+                </button>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <button onClick={() => router.push('/login')} className="btn btn-outline-primary">
+                  تسجيل الدخول
+                </button>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 };
