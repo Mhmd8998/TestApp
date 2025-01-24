@@ -3,10 +3,12 @@ const {UserModel,validateUpdateUser} = require('../model/User');
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-  getAllUser: asyncHandler(async (req, res) => {
-      const users = await UserModel.find().populate("-password");
-      res.status(200).json(users);
-  }),
+  getAllUser:asyncHandler(async (req, res) => {
+  
+    const users = await UserModel.find().select('-password'); // استبعاد كلمة المرور باستخدام select
+    res.status(200).json(users);
+  
+});
 
   updateUser: asyncHandler(async (req, res) => {
     const { error } = validateUpdateUser(req.body);
@@ -36,7 +38,7 @@ module.exports = {
     res.status(200).json({ message: "update user successfully" });
   }),
   getUser:asyncHandler(async (req,res) => {    
-      const user = await UserModel.findById(req.params.id).populate("-password");
+      const user = await UserModel.findById(req.params.id).select("-password");
       res.status(200).json(user);    
   }),
   uploadProfile: asyncHandler(async (req, res) => {
