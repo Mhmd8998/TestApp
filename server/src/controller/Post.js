@@ -49,7 +49,8 @@ module.exports= {
     return res.status(200).json(postUpdate);
 }),
   getAllPost:asyncHandler(async (req,res) => {
-    const posts = await PostModel.find().populate("userId",["-password -email -createdAt -createdUp"]);
+    const posts = await PostModel.find().populate("userId",["-password -email -createdAt -updateAt"]);
+    res.status(200).json(posts);
   })
                                     
 
