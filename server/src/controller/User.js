@@ -4,11 +4,10 @@ const bcrypt = require("bcryptjs");
 
 module.exports = {
   getAllUser:asyncHandler(async (req, res) => {
-  
     const users = await UserModel.find().select('-password'); // استبعاد كلمة المرور باستخدام select
     res.status(200).json(users);
   
-});
+  }),
 
   updateUser: asyncHandler(async (req, res) => {
     const { error } = validateUpdateUser(req.body);
