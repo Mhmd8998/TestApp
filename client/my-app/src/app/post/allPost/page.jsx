@@ -49,7 +49,7 @@ export default function Home() {
         {/* عرض المنشورات إذا كانت البيانات موجودة */}
         {posts.length > 0 ? (
           posts.map((post) => (
-            <div class="card border-dark mb-3" style="max-width: 18rem;" key={post._id}>>
+            <div class="card border-dark mb-3" style="max-width: 18rem;" key={post._id}>
                <div class="card-header">{post.userId.username} <span>{post.createdAt}</span></div>
                <div class="card-body">
                  <h5 class="card-title">{post.title}</h5>
