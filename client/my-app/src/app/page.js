@@ -49,37 +49,38 @@ export default function Home() {
   }, [token]); // تحديث عند تغيير التوكن
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        {/* عرض رسالة الخطأ إذا كان هناك خطأ */}
-        {errorMessage && (
-          <div className="alert alert-danger" role="alert">
-             {errorMessage}
-          </div>
-        )}
-
-{/* عرض المستخدمين إذا كانت البيانات موجودة */}
-{users ? (
-  users.map((user) => (
-    <div className="card" style={{ width: '18rem' }} key={user._id}>
-      <div className="card-body">
-        <h5 className="card-title">{user.firstname} {user.lastname}</h5>
-        <p className="card-text">{new Date(user.createdAt).toLocaleDateString()}</p>    
-        {/* تعديل المستخدم إذا كانت idToken تساوي _id */}
-        {idToken === user._id && (
-          <button type="button" onClick={() => handleUpdate(user._id)} className="btn btn-primary">
-            تعديل
-          </button>
-        )}
+    <div className="container">
+  <main className="my-5">
+    {/* عرض رسالة الخطأ إذا كان هناك خطأ */}
+    {errorMessage && (
+      <div className="alert alert-danger" role="alert">
+        {errorMessage}
       </div>
-    </div>
-  ))
-) : (
-  <div className="alert alert-danger" role="alert">
-             لا توجد بيانات لعرضها
+    )}
+
+    {/* عرض المستخدمين إذا كانت البيانات موجودة */}
+    {users ? (
+      users.map((user) => (
+        <div className="card mb-3" style={{ width: '18rem' }} key={user._id}>
+          <div className="card-body">
+            <h5 className="card-title">{user.firstname} {user.lastname}</h5>
+            <p className="card-text">{new Date(user.createdAt).toLocaleDateString()}</p>    
+            {/* تعديل المستخدم إذا كانت idToken تساوي _id */}
+            {idToken === user._id && (
+              <button type="button" onClick={() => handleUpdate(user._id)} className="btn btn-primary">
+                تعديل
+              </button>
+            )}
           </div>
-      </main>
-    </div>
+        </div>
+      ))
+    ) : (
+      <div className="alert alert-danger" role="alert">
+        لا توجد بيانات لعرضها
+      </div>
+    )}
+  </main>
+</div>
   );
           }
             
