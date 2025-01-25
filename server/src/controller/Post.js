@@ -54,7 +54,7 @@ module.exports= {
   }),
   getPostUser:asyncHandler(async(req,res)=>{
     if(!req.user.id){
-      return res.status.(404).json({message:"user is not access"});
+      return res.status(404).json({message:"user is not access"});
     }
     const PostUser= await PostModel.find({userId:req.user.id}).populate("userId",["-password -email -createdAt -updateAt"]);
     if(!PostUser || PostUser.length === 0){
