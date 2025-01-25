@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const {UserModel,validateUpdateUser} = require('../model/User');
+const {PostModel} = require('../model/Post');
 const bcrypt = require("bcryptjs");
 
 module.exports = {
@@ -70,6 +71,20 @@ module.exports = {
     // إرسال المستخدم مع الصورة المحدثة
     res.json(user);
   
+}),
+getProfile:asyncHandler(async (req,res) => {
+  if(!req.user.id){
+    return res.status(401).json({message:"Not access to user"});
+  }
+  const user = await UserModel.findOne({_id:req.user.id});
+  if(!user){
+    return res.status(404).json({message:"not have account"});
+  }
+  const postUser = await PostModel.find({userId:req.user.id});
+  if(!postUser || postUser.length === 0){
+    return res.status(404).json({message:"Not ahave post !"});
+  }
+  return res.status(200).json({user,post:postUser});
 })
         
 };
