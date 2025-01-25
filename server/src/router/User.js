@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const validateObjectId = require("../middlewares/ValidateObjectId");
-const { getAllUser, updateUser,getUser ,uploadProfile} = require('../controller/User');
+const { getAllUser, updateUser,getUser ,uploadProfile,getProfile} = require('../controller/User');
 const { verifyTokenAndAdmin, verifyTokenAndUserId,verifyToken } = require('../middlewares/verifyToken');
 const upload = require("../middlewares/UploadPhoto");
 
@@ -16,5 +16,7 @@ router.route("/profile/upload-profile-photo").post(
   upload.single('image'),  // رفع صورة الملف الشخصي
   uploadProfile  // التعامل مع البيانات بعد رفع الصورة
 );
+
+router.route("/profile").get(verifyToken,getProfile);
 
 module.exports = router;
