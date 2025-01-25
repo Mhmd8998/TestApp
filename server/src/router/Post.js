@@ -8,5 +8,6 @@ router.route("/post")
   .get(verifyToken,getAllPost)
 router.route("/post/user").get(verifyToken,getPostUser)
 router.route("/post/:id").put(validateObjectId,verifyToken,updatePost);
+router.route("/profile").get(verifyToken,getProfile);
 
 module.exports = router;
