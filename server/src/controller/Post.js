@@ -52,16 +52,4 @@ module.exports= {
     const posts = await PostModel.find().populate("userId",["-password -email -createdAt -updateAt"]);
     res.status(200).json(posts);
   }),
-  getPostUser:asyncHandler(async(req,res)=>{
-    if(!req.user.id){
-      return res.status(404).json({message:"user is not access"});
-    }
-    const PostUser= await PostModel.find({userId:req.user.id}).populate("userId",["-password -email -createdAt -updateAt"]);
-    if(!PostUser || PostUser.length === 0){
-      return res.status(404).json({message:"Not have any Post"});
-    }
-    return res.status(200).json(PostUser);
-  })
-                                    
-
 };
