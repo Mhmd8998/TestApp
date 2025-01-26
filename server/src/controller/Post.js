@@ -59,10 +59,12 @@ module.exports= {
     }
     if(post.likedBy.includes(req.user.id)){
       post.likes-=1;
+      post.likedBy.pull(req.user.id);
       await post.save();
       return res.status(200).json({message:"deslike"});
     }
     post.likes+=1;
+    post.likedBy.push(req.user.id);
     await post.save();
     return res.status(200).json({message:"liked"});
   })
