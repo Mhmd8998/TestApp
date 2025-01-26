@@ -18,7 +18,7 @@ const PostSchema = new mongoose.Schema({
   likedBy:[{
     type:mongoose.Schema.Type.ObjectId,
     ref:"User"
-  }]
+  }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,  // Assuming you are linking to a User model
     ref: "User",  // Reference to the User model
