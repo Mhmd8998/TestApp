@@ -52,20 +52,22 @@ module.exports= {
     const posts = await PostModel.find().populate("userId",["-password -email -createdAt -updateAt"]);
     res.status(200).json(posts);
   }),
-  likeHandler:asyncHandler(async (req,res) => {
-    const post = await PostModel.findById(req.params.id);
-    if(!post){
-      return res.status(404).json({message:"Post Not Found"});
-    }
-    if(post.likedBy.includes(req.user.id)){
-      post.likes -= 1;
-      post.likedBy.pull(req.user.id);
-      await post.save();
-      return res.status(200).json({message:"deslike"});
-    }
-    post.likes += 1;
-    post.likedBy.push(req.user.id);
+  const likeHandler = asyncHandler(async (req, res) => {
+  const post = await PostModel.findById(req.params.id);
+  if (!post) {
+    return res.status(404).json({ message: "Post Not Found" });
+  }
+
+  if (post.likedBy.includes(req.user.id)) {
+    post.likes -= 1;
+    post.likedBy.pull(req.user.id);
     await post.save();
-    return res.status(200).json({message:"liked"});
-  })
+    return res.status(200).json({ message: "disliked" });
+  }
+
+  post.likes += 1;
+  post.likedBy.push(req.user.id);
+  await post.save();
+  return res.status(200).json({ message: "liked" });
+})
 };
