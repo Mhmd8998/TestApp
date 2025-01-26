@@ -16,7 +16,7 @@ const PostSchema = new mongoose.Schema({
     default: 0,  // القيمة الافتراضية هي 0
   },
   likedBy:[{
-    type:mongoose.Schema.Type.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     ref:"User"
   }],
   userId: {
