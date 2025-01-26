@@ -52,7 +52,7 @@ module.exports= {
     const posts = await PostModel.find().populate("userId",["-password -email -createdAt -updateAt"]);
     res.status(200).json(posts);
   }),
-  const likeHandler = asyncHandler(async (req, res) => {
+  likeHandler: asyncHandler(async (req, res) => {
   const post = await PostModel.findById(req.params.id);
   if (!post) {
     return res.status(404).json({ message: "Post Not Found" });
