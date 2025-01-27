@@ -12,7 +12,7 @@ module.exports ={
       res.status(404).json({message:"Post Not Found !"});
     }
     const comment = await CommentModel.create({
-      postId:req.params,
+      postId:req.params.id,
       userId:req.user.id,
       comment:req.body.comment
     })
