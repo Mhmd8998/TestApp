@@ -15,7 +15,7 @@ const CommentSchema = mongoose.Schema({
     required:true,
     minlength:3
   }
-},{ timestamp:true});
+},{ timestamps:true});
 const CommentModel = mongoose.model("Comment",CommentSchema);
 
 const validateAddComment =(obj)=>{
