@@ -7,7 +7,7 @@ module.exports ={
     if (error){
       res.status(400).json({message:error.details[0].message});
     }
-    const post = await PostModel.findById(req.params);
+    const post = await PostModel.findById(req.params.id);
     if(!post){
       res.status(404).json({message:"Post Not Found !"});
     }
