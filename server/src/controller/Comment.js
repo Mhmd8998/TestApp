@@ -15,7 +15,14 @@ module.exports ={
       postId:req.params.id,
       userId:req.user.id,
       comment:req.body.comment
-    })
+    }),
     res.status(200).json(comment);
+  }),
+  getComment:asyncHandler(async (req,res) => {
+    const comments = await CommentModel.find({postId:req.params.id});
+    if (!comments){
+      return res.status(404).json({message:"Not Found Comments"});
+    }
+    return res.status(200).json(comments);
   })
 }
