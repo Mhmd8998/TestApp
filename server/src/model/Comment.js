@@ -22,6 +22,7 @@ const validateAddComment =(obj)=>{
   const schema = Joi.object({
     comment:Joi.string().required()
   })
+  return schema.validate(obj);
 }
 
 module.exports = {
